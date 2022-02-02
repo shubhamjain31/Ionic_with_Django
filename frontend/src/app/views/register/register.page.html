@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Sign Up</ion-title>
+  </ion-toolbar>
+</ion-header>
+ 
+<ion-content>
+ 
+  <form (ngSubmit)="register()" [formGroup]="credentials">
+    <div class="input-group">
+      <ion-item>
+        <ion-input type="text" placeholder="First Name" name="first_name" formControlName="first_name"></ion-input>
+      </ion-item>
+      <div *ngIf="(first_name.dirty || first_name.touched) && first_name.errors" class="errors">
+        <span *ngIf="first_name.errors?.required">First Name is required</span>
+      </div>
+
+      <ion-item>
+        <ion-input type="text" placeholder="Last Name" name="lastt_name" formControlName="last_name"></ion-input>
+      </ion-item>
+      <div *ngIf="(last_name.dirty || last_name.touched) && last_name.errors" class="errors">
+        <span *ngIf="last_name.errors?.required">Last Name is required</span>
+      </div>
+
+      <ion-item>
+        <ion-input type="email" placeholder="Email" name="email" formControlName="email"></ion-input>
+      </ion-item>
+      <div *ngIf="(email.dirty || email.touched) && email.errors" class="errors">
+        <span *ngIf="email.errors?.required">Email is required</span>
+        <span *ngIf="email.errors?.email">Email is invalid</span>
+      </div>
+
+      <ion-item>
+        <ion-input type="text" placeholder="Mobile" name="mobile" formControlName="mobile"></ion-input>
+      </ion-item>
+      <div *ngIf="(mobile.dirty || mobile.touched) && mobile.errors" class="errors">
+        <span *ngIf="mobile.errors?.required">Mobile is required</span>
+      </div>
+
+      <ion-item>
+        <ion-input type="password" placeholder="Password" name="password" formControlName="password"></ion-input>
+      </ion-item>
+      <div *ngIf="(password.dirty || password.touched) && password.errors" class="errors">
+        <span *ngIf="password.errors?.required">Password is required</span>
+        <span *ngIf="password.errors?.minlength">Password needs to be 6 characters</span>
+      </div>
+
+      <ion-item>
+        <ion-input type="password" placeholder="Confirm Password" name="confirm_password" formControlName="confirm_password"></ion-input>
+      </ion-item>
+      <div *ngIf="(confirm_password.dirty || confirm_password.touched) && confirm_password.errors" class="errors">
+        <span *ngIf="confirm_password.errors?.required">Confirm Password is required</span>
+        <span *ngIf="confirm_password.errors?.minlength">Confirm Password needs to be 6 characters</span>
+        <span *ngIf="confirm_password.errors?.notSame">Password And Confirm Password Do Not Match!</span>
+      </div>
+    </div>
+ 
+    <ion-button type="submit" expand="block" [disabled]="!credentials.valid">Sign Up</ion-button>
+    <ion-button type="button" expand="block" class="account-btn" [routerLink]="['/login']" color="light" fill="clear">Already Account? Log In
+    </ion-button>
+  </form>
+</ion-content>
