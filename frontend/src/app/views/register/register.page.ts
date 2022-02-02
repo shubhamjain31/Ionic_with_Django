@@ -58,7 +58,7 @@ export class RegisterPage implements OnInit {
   }
 
   register(){
-    console.log(this.credentials.value)
+    console.log(this.credentials.value, 'tets')
   }
 
 }
