@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from '../services/storage.service';
+import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  APIUrl = 'http://143.244.129.40:8000';
-  // APIUrl = 'http://143.244.129.40:8001/api';
+  APIUrl = 'http://localhost:8000';
   private httpOptions: any;
 
   session_data: any
+  isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   
-  // private cookieService:CookieService
   constructor(private http: HttpClient, private storageService:StorageService) { 
     // this.httpOptions = {
     //   headers: new HttpHeaders({ 'Content-Type': 'application/json','x-csrftoken' : this.cookieService.get('csrftoken'), 'Authorization' : this.cookieService.get('sessionid') }),
@@ -27,7 +27,7 @@ export class AuthenticationService {
   }
 
   public loginUser(data: any){
-    return this.http.post(this.APIUrl + '/mobile/login/', data);
+    return this.http.post(this.APIUrl + '/login/', data);
   }
 
   public user_details(data: any){
@@ -58,6 +58,11 @@ export class AuthenticationService {
       withCredentials: true
     };
     return this.http.post(this.APIUrl + '/attendance/in/', data, httpOptions);
+  }
+
+  public logout(): Promise<void> {
+    this.isAuthenticated.next(false);
+    return this.storageService.removeData({});
   }
 }
 

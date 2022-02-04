@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./views/register/register.module').then( m => m.RegisterPageModule)
   },
+  {
+    path: 'logout',
+    loadChildren: () => import('./views/logout/logout.module').then( m => m.LogoutPageModule)
+  },
 ];
 @NgModule({
   imports: [

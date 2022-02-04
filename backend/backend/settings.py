@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'App'
+    'app',
+    'authentication'
 ]
 
 MIDDLEWARE = [
@@ -129,7 +130,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ORIGIN_ALLOW_ALL = True
 
 # custom user model
-AUTH_USER_MODEL = 'App.User'
+AUTH_USER_MODEL = 'app.User'
 
 # custom authentication
 AUTHENTICATION_BACKENDS = [

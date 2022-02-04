@@ -9,9 +9,9 @@ export class AppComponent {
 
   pages = [
     {
-      title: 'Login',
-      url: '/tabs/tab1',
-      icon: 'log-in'
+      title: 'Logout',
+      url: '/logout',
+      icon: 'log-out'
     },
     {
       title: 'Contact',

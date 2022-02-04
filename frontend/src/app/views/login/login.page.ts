@@ -5,6 +5,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { Router } from '@angular/router';
 
+import { AuthenticationService } from '../../services/authentication.service';
+import { StorageService } from '../../services/storage.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -14,7 +17,7 @@ export class LoginPage implements OnInit {
   credentials: FormGroup;
 
   constructor(public menu: MenuController, private fb: FormBuilder, private alertController: AlertController, private router: Router,
-    private loadingController: LoadingController) {
+    private loadingController: LoadingController, private authenticationService: AuthenticationService, private storageService:StorageService) {
     this.menu.enable(false);
     this.menu.swipeGesture(false);
   }
@@ -39,8 +42,32 @@ export class LoginPage implements OnInit {
     return this.credentials.get('password');
   }
 
-  login(){
-    console.log(this.credentials.value)
+  async login() {
+    const loading = await this.loadingController.create();                // loader
+    await loading.present();
+    
+    this.authenticationService.loginUser(this.credentials.value).subscribe(
+      async (res) => {
+        console.log(res,'res')
+        if (res["success"]){
+          await loading.dismiss(); 
+          this.storageService.addData({"sessionid": res['sessionid'], "csrf": res['csrf']});       
+          this.router.navigateByUrl('/tabs', { replaceUrl: true });
+        }
+
+        if (res["error"]){
+          await loading.dismiss();
+          const alert = await this.alertController.create({
+            header: 'Login failed',
+            message: "Invalid Credentials",
+            buttons: ['OK'],
+          });
+  
+          await alert.present();                    // alert message
+        }
+      },
+    );
   }
+
 
 }
