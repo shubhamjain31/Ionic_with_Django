@@ -49,13 +49,12 @@ export class LoginPage implements OnInit {
     this.authenticationService.loginUser(this.credentials.value).subscribe(
       async (res) => {
         console.log(res,'res')
-        if (res["success"]){
-          await loading.dismiss(); 
-          this.storageService.addData({"sessionid": res['sessionid'], "csrf": res['csrf']});       
+        if (res.sessionid != undefined){
+          await loading.dismiss();       
           this.router.navigateByUrl('/tabs', { replaceUrl: true });
         }
 
-        if (res["error"]){
+        if (res.sessionid === undefined){
           await loading.dismiss();
           const alert = await this.alertController.create({
             header: 'Login failed',

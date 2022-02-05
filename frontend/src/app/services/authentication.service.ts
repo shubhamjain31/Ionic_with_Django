@@ -3,6 +3,7 @@ import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { StorageService } from '../services/storage.service';
 import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
+import { map, tap, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -11,30 +12,43 @@ export class AuthenticationService {
   APIUrl = 'http://localhost:8000';
   private httpOptions: any;
 
-  session_data: any
+  sessionid: any;
+  csrf: any;
   isAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
   
   constructor(private http: HttpClient, private storageService:StorageService) { 
-    // this.httpOptions = {
-    //   headers: new HttpHeaders({ 'Content-Type': 'application/json','x-csrftoken' : this.cookieService.get('csrftoken'), 'Authorization' : this.cookieService.get('sessionid') }),
-    //   withCredentials: true
-    // };
     this.init()
   }
 
   async init() {
-    this.session_data = await this.storageService.getData();
+    const session_data = await this.storageService.getData();
+
+    if (session_data && session_data.sessionid) {
+
+      this.sessionid    = session_data.sessionid;
+      this.csrf         = session_data.csrf;
+      this.isAuthenticated.next(true);
+    } else {
+      this.isAuthenticated.next(false);
+    }
   }
 
-  public loginUser(data: any){
-    return this.http.post(this.APIUrl + '/login/', data);
+  public loginUser(credentials: any): Observable<any> {
+    return this.http.post(this.APIUrl + '/login/', credentials).pipe(
+      map((data: any) => data),
+      switchMap(session_data => {
+        return this.storageService.addData({"sessionid": session_data['sessionid'], "csrf": session_data['csrf']}); 
+      }),
+      tap(_ => {
+        this.isAuthenticated.next(true);
+      })
+    );
   }
 
   public user_details(data: any){
- 
-    console.log(this.session_data,'skdsjd')
+    console.log(this.sessionid,'this.sessionid')
     let httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : this.session_data[0] }),
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : this.sessionid }),
       withCredentials: true
     };
     return this.http.post(this.APIUrl + '/user/details/', data, httpOptions);
@@ -42,9 +56,8 @@ export class AuthenticationService {
 
   public mark_attendance_in(data: any){
  
-    console.log(this.session_data,'skdsjd')
     let httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : this.session_data[0] }),
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : this.sessionid }),
       withCredentials: true
     };
     return this.http.post(this.APIUrl + '/attendance/in/', data, httpOptions);

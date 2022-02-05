@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-tab1',
@@ -7,6 +8,13 @@ import { Component } from '@angular/core';
 })
 export class Tab1Page {
 
-  constructor() {}
+  constructor(public authenticationService: AuthenticationService) {
+    this.authenticationService.user_details({'day':"jshsj", "shj":"jhsjdhs"})
+    .subscribe((resp: any) => {
+      console.log(resp);
+    }, err => {
+      console.log(err);
+    });
+  }
 
 }
