@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { LoginGuardService } from "./guards/login-guard.service";
 
 const routes: Routes = [
   {
@@ -11,17 +12,19 @@ const routes: Routes = [
       },
       {
         path: 'login',
-        loadChildren: () => import('./views/login/login.module').then(m => m.LoginPageModule)
+        loadChildren: () => import('./views/login/login.module').then(m => m.LoginPageModule),
+        canActivate: [LoginGuardService]
       },
       {
         path: 'signup',
-        loadChildren: () => import('./views/signup/signup.module').then(m => m.SignupPageModule)
+        loadChildren: () => import('./views/signup/signup.module').then(m => m.SignupPageModule),
       }
     ]
   },
   {
     path: 'register',
-    loadChildren: () => import('./views/register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./views/register/register.module').then( m => m.RegisterPageModule),
+    canActivate: [LoginGuardService]
   },
   {
     path: 'logout',
