@@ -18,7 +18,7 @@ export class LoginGuardService {
   canActivate(route: ActivatedRouteSnapshot): Promise<boolean> {
 
     return this.storage.get("mylist").then(res => {
-      if (!res) {
+      if (!res.sessionid) {
         return true;
       }
 
