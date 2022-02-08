@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { AlertController, ModalController } from '@ionic/angular';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { StorageService } from '../../../services/storage.service';
+import { AddNewTaskPage } from '../../add-new-task/add-new-task.page';
 
 @Component({
   selector: 'app-tab1',
@@ -8,9 +10,12 @@ import { StorageService } from '../../../services/storage.service';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
+  todoList: any = []
 
-  constructor(public authenticationService: AuthenticationService, private storageService:StorageService) {
-    this.get_data()
+  today: number = Date.now();
+
+  constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public modalCtlr: ModalController) {
+    this.get_data();
   }
 
   async get_data(){
@@ -22,6 +27,16 @@ export class Tab1Page {
     }, err => {
       console.log(err);
     });
+  }
+
+  async addNewItem() {
+    const modal = await this.modalCtlr.create({
+      component: AddNewTaskPage,
+    })
+    // modal.onDidDismiss().then(newTask =>{
+    //   this.getAllTask()
+    // })
+    return await modal.present()
   }
 
 }

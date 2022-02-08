@@ -15,10 +15,6 @@ const routes: Routes = [
         loadChildren: () => import('./views/login/login.module').then(m => m.LoginPageModule),
         canActivate: [LoginGuardService]
       },
-      {
-        path: 'signup',
-        loadChildren: () => import('./views/signup/signup.module').then(m => m.SignupPageModule),
-      }
     ]
   },
   {
@@ -29,6 +25,10 @@ const routes: Routes = [
   {
     path: 'logout',
     loadChildren: () => import('./views/logout/logout.module').then( m => m.LogoutPageModule)
+  },
+  {
+    path: 'add-new-task',
+    loadChildren: () => import('./views/add-new-task/add-new-task.module').then( m => m.AddNewTaskPageModule)
   },
 ];
 @NgModule({
