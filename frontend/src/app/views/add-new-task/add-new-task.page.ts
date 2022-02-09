@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { IfStmt } from '@angular/compiler';
+
+import { AuthenticationService } from '../../services/authentication.service';
+import { StorageService } from '../../services/storage.service';
+import { IonicToastService } from '../../services/ionic-toast.service';
 
 @Component({
   selector: 'app-add-new-task',
@@ -17,18 +20,30 @@ export class AddNewTaskPage implements OnInit {
   itemPriority: string;
   itemCategory: string;
 
-  constructor(public modalCtlr: ModalController) { }
+  constructor(public modalCtlr: ModalController, private authenticationService: AuthenticationService, private storageService:StorageService,
+          private ionicToastService: IonicToastService) { }
 
   ngOnInit() {
   }
 
   async add(){
-    this.newTaskObj = ({itemName:this.itemName, itemDueDate:this.itemDueDate, itemPriority:this.itemPriority,itemCategory:this.categorySelectedCategory})
-    console.log(this.newTaskObj);
+    const session_data = await this.storageService.getData();
+
+    let date_ = new Date(this.itemDueDate);
+
+    this.newTaskObj = {itemName:      this.itemName, 
+                      itemDueDate:    date_.toUTCString(), 
+                      itemPriority:   this.itemPriority,
+                      itemCategory:   this.categorySelectedCategory
+                    }
     let uid = this.itemName + this.itemDueDate
     
     if(uid){
-      // await this.todoService.addTask(uid,this.newTaskObj)
+      this.authenticationService.add_todo(this.newTaskObj, session_data['sessionid']).subscribe((data: any)=>{
+        if (data["success"]){
+          this.ionicToastService.showToast('Task Added!');
+        }
+      })
     }else{
       console.log("can't save empty task");
     }

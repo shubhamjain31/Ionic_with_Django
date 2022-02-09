@@ -34,13 +34,13 @@ export class AuthenticationService {
     return this.http.post(this.APIUrl + '/user/details/', data, httpOptions);
   }
 
-  public mark_attendance_in(data: any){
+  public add_todo(data: any, sessionid: string){
  
     let httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : this.sessionid }),
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
       withCredentials: true
     };
-    return this.http.post(this.APIUrl + '/attendance/in/', data, httpOptions);
+    return this.http.post(this.APIUrl + '/add/todo/', data, httpOptions);
   }
 
   public mark_attendance_out(data: any, session_id: string){

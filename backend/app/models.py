@@ -33,3 +33,14 @@ class User(AbstractUser):
         db_table = 'user'
         verbose_name = _('user')
         verbose_name_plural = _('users')
+
+class Todos(models.Model):
+    name                    = models.CharField(max_length=200, blank=True, null=True)
+    due_date                = models.DateTimeField(blank=True, null=True)
+    category                = models.CharField(max_length=50, blank=True, null=True)
+    priority                = models.CharField(max_length=50, blank=True, null=True)
+    date_created            = models.DateTimeField(auto_now_add=True, editable=False, blank=True)
+    ip_address              = models.CharField(max_length=100, null=True, blank=True) 
+
+    def __str__(self):
+        return self.name

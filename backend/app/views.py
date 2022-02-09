@@ -14,3 +14,11 @@ def user_details(request):
         user_data = QueryDict(data)
         print(user_data)
     return JsonResponse({"success":True})
+
+@csrf_exempt
+def add_todo(request):
+    if request.method == "POST":
+        data = urlencode(json.loads(request.body))
+        user_data = QueryDict(data)
+        print(user_data)
+    return JsonResponse({"success":True})
