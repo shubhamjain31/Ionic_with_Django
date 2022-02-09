@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StorageService } from './services/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -15,14 +16,28 @@ export class AppComponent {
     },
     {
       title: 'Contact',
-      url: '/tabs/tab2',
+      url: '',
       icon: 'person'
     },
     {
       title: 'About',
-      url: '/tabs/tab3',
+      url: '',
       icon: 'information-circle'
     }
   ];
-  constructor() { }
+  constructor(private storageService:StorageService) { 
+    this.initialApp()
+  }
+
+  async initialApp(){
+    const session_data = await this.storageService.getData();
+
+    try {
+      if(Object.keys(session_data).length === 0){
+      }
+    }
+    catch(e){
+      this.storageService.addData({});
+    }
+  }
 }

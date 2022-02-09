@@ -23,10 +23,6 @@ const routes: Routes = [
     canActivate: [LoginGuardService]
   },
   {
-    path: 'logout',
-    loadChildren: () => import('./views/logout/logout.module').then( m => m.LogoutPageModule)
-  },
-  {
     path: 'add-new-task',
     loadChildren: () => import('./views/add-new-task/add-new-task.module').then( m => m.AddNewTaskPageModule)
   },

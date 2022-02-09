@@ -32,6 +32,10 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'logout',
+    loadChildren: () => import('../../views/logout/logout.module').then( m => m.LogoutPageModule)
+  },
+  {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full',
