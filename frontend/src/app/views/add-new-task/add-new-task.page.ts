@@ -29,10 +29,8 @@ export class AddNewTaskPage implements OnInit {
   async add(){
     const session_data = await this.storageService.getData();
 
-    let date_ = new Date(this.itemDueDate);
-
     this.newTaskObj = {itemName:      this.itemName, 
-                      itemDueDate:    date_.toUTCString(), 
+                      itemDueDate:    this.itemDueDate, 
                       itemPriority:   this.itemPriority,
                       itemCategory:   this.categorySelectedCategory
                     }
@@ -41,7 +39,7 @@ export class AddNewTaskPage implements OnInit {
     if(uid){
       this.authenticationService.add_todo(this.newTaskObj, session_data['sessionid']).subscribe((data: any)=>{
         if (data["success"]){
-          this.ionicToastService.showToast('Task Added!');
+          this.ionicToastService.showToast(data["msg"]);
         }
       })
     }else{

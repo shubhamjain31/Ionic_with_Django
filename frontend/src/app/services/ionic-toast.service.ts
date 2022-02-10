@@ -12,7 +12,7 @@ export class IonicToastService {
   showToast(message) {
     this.myToast = this.toast.create({
       message: message,
-      duration: 2000,
+      duration: 3000,
       position: 'bottom',
       cssClass:"my-custom-class",
       buttons: [
