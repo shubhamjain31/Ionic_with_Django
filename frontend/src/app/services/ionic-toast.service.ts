@@ -9,11 +9,12 @@ export class IonicToastService {
 
   constructor( private toast: ToastController) { }
 
-  showToast(message) {
+  showToast(message, color) {
     this.myToast = this.toast.create({
       message: message,
       duration: 3000,
       position: 'bottom',
+      color: color,
       cssClass:"my-custom-class",
       buttons: [
         {

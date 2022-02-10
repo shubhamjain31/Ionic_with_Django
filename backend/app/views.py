@@ -6,6 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.dateparse import parse_datetime
 import json, datetime
 
+from validators import is_invalid
+
 from .models import *
 from backend.decorators import *
 
@@ -30,7 +32,18 @@ def add_todo(request):
         priority       = request.POST.get('itemPriority')
         category       = request.POST.get('itemCategory')
 
-        print(request.POST)
+        if name is None:
+            return JsonResponse({"error":True, "msg":"Name is Required!"})
+
+        if priority is None:
+            return JsonResponse({"error":True, "msg":"Please Select Any Priority!"})
+
+        if dueDate is None:
+            return JsonResponse({"error":True, "msg":"Due Date is Required!"})
+
+        if category is None:
+            return JsonResponse({"error":True, "msg":"Category is Required!"})
+
         dueDate = parse_datetime(dueDate)
 
         Todos.objects.create(name       = name,
