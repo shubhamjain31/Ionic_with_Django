@@ -19,6 +19,7 @@ export class AddNewTaskPage implements OnInit {
   itemDueDate: any;
   itemPriority: string;
   itemCategory: string;
+  todoList: any = []
 
   constructor(public modalCtlr: ModalController, private authenticationService: AuthenticationService, private storageService:StorageService,
           private ionicToastService: IonicToastService) { }
@@ -60,6 +61,13 @@ export class AddNewTaskPage implements OnInit {
 
   async dismis(){
     await this.modalCtlr.dismiss(this.newTaskObj)
+  }
+
+  async getAllTask(){
+    const session_data = await this.storageService.getData();
+
+    this.todoList = this.authenticationService.todos_list(session_data['sessionid'])
+    console.log(this.authenticationService.todos_list(session_data['sessionid']));
   }
 
 }

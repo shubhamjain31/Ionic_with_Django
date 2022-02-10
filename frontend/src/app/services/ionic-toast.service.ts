@@ -15,7 +15,7 @@ export class IonicToastService {
       duration: 3000,
       position: 'bottom',
       color: color,
-      cssClass:"my-custom-class",
+      cssClass:"toaster-class",
       buttons: [
         {
           text: 'Done',

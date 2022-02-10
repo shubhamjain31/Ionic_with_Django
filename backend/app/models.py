@@ -2,7 +2,6 @@ from django.db import models
 
 from django.contrib.auth.models import AbstractUser
 from .manager import UserManager
-# from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
@@ -35,6 +34,7 @@ class User(AbstractUser):
         verbose_name_plural = _('users')
 
 class Todos(models.Model):
+    user                    = models.ForeignKey(User, on_delete=models.CASCADE)
     name                    = models.CharField(max_length=200, blank=True, null=True)
     due_date                = models.DateTimeField(blank=True, null=True)
     category                = models.CharField(max_length=50, blank=True, null=True)

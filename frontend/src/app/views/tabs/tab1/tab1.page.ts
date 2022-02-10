@@ -21,7 +21,7 @@ export class Tab1Page {
   async get_data(){
     const session_data = await this.storageService.getData();
 
-    this.authenticationService.user_details({'day':"jshsj", "shj":"jhsjdhs"}, session_data.sessionid)
+    this.authenticationService.todos_list(session_data.sessionid)
     .subscribe((resp: any) => {
       console.log(resp);
     }, err => {
