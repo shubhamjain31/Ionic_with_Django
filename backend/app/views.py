@@ -15,8 +15,10 @@ from backend.decorators import *
 
 @csrf_exempt
 def all_todos(request):
-    
-    return JsonResponse({"success":True})
+    todos = Todos.objects.filter(user = request.user)
+
+    all_todos = json.loads(serialize("json", todos))
+    return JsonResponse({"success":True, 'all_todos': all_todos})
 
 @csrf_exempt
 def add_todo(request):
@@ -47,8 +49,34 @@ def add_todo(request):
                              due_date   = dueDate,
                              priority   = priority,
                              category   = category,
-                             ip_address = get_ip(request)
+                             ip_address = get_ip(request),
+                             user       = request.user
                             )
         msg = "Todo Added!"
         return JsonResponse({"success":True, "msg":msg})
+    return JsonResponse({})
+
+@csrf_exempt
+def todo_status(request):
+    if request.method == "POST":
+        data            = urlencode(json.loads(request.body))
+        request.POST    = QueryDict(data)
+
+        done_           = request.POST.get('done')
+        id_            = request.POST.get('id')
+        try:
+            obj = Todos.objects.get(pk=id_)
+        except:
+            return JsonResponse({'error': True})
+
+        obj.done = done_
+        obj.save()
+        
+        if obj.done == 'True':
+            msg = "Todo Completed!"
+            return JsonResponse({"ticked":True, "msg":msg})
+        else:
+            msg = "Todo Completed!"
+            return JsonResponse({"not_ticked":True, "msg":msg})
+
     return JsonResponse({})

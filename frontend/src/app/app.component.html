@@ -3,8 +3,8 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list>
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
+          <ion-list-header><ion-label class="header-title" color="primary">Docket</ion-label></ion-list-header>
+          <ion-note>{{user_email}}</ion-note>
           <ion-menu-toggle autoHide="false" *ngFor="let p of pages">
             <ion-item [routerLink]="[p.url]" routerLinkActive="selected" routerDirection="root" lines="none" detail="false">
               <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>

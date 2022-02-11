@@ -39,6 +39,7 @@ class Todos(models.Model):
     due_date                = models.DateTimeField(blank=True, null=True)
     category                = models.CharField(max_length=50, blank=True, null=True)
     priority                = models.CharField(max_length=50, blank=True, null=True)
+    done                    = models.BooleanField(default=False)
     date_created            = models.DateTimeField(auto_now_add=True, editable=False, blank=True)
     ip_address              = models.CharField(max_length=100, null=True, blank=True) 
 

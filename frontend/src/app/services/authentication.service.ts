@@ -14,6 +14,7 @@ export class AuthenticationService {
 
   sessionid: any;
   csrf: any;
+  private user_email = new Subject<any>();
   
   constructor(private http: HttpClient, private storageService:StorageService) {  }
 
@@ -21,9 +22,14 @@ export class AuthenticationService {
     return this.http.post(this.APIUrl + '/login/', credentials).pipe(
       map((data: any) => data),
       switchMap(session_data => {
-        return this.storageService.addData({"sessionid": session_data['sessionid'], "csrf": session_data['csrf']}); 
+        this.user_email.next(session_data['email']);
+        return this.storageService.addData({"sessionid": session_data['sessionid'], "csrf": session_data['csrf'], 'email': session_data['email']}); 
       })
     );
+  }
+
+  get_user_email(): Subject<any> {
+      return this.user_email;
   }
 
   public user_details(data: any, sessionid: string){
@@ -35,7 +41,6 @@ export class AuthenticationService {
   }
 
   public todos_list(sessionid: string){
-    console.log(sessionid)
     let httpOptions = {
       headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
       withCredentials: true
@@ -52,13 +57,13 @@ export class AuthenticationService {
     return this.http.post(this.APIUrl + '/add/todo/', data, httpOptions);
   }
 
-  public mark_attendance_out(data: any, session_id: string){
+  public todo_status(data: any, session_id: string){
  
     let httpOptions = {
-      headers: new HttpHeaders({'x-csrftoken' : session_id }),
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : session_id }),
       withCredentials: true
     };
-    return this.http.post(this.APIUrl + '/attendance/in/', data, httpOptions);
+    return this.http.post(this.APIUrl + '/todo/status/', data, httpOptions);
   }
 
   public logout(): Promise<void> {

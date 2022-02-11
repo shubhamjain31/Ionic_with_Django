@@ -16,7 +16,6 @@ def login_user(request):
     if request.method == "POST":
         data = urlencode(json.loads(request.body))
         user_data = QueryDict(data)
-        print(user_data)
 
         email               = user_data.get('email')
         password            = user_data.get('password')
@@ -29,7 +28,7 @@ def login_user(request):
             sessionid   = request.session.session_key
             print(token,sessionid)
 
-            return JsonResponse({'sessionid':sessionid, 'csrf':token, 'success':True})
+            return JsonResponse({'sessionid':sessionid, 'csrf':token, 'success':True, 'email': email})
         else:    
             msg = 'Invalid credentials'
             return JsonResponse({'msg':msg, 'error':True})   

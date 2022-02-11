@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { StorageService } from './services/storage.service';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -7,29 +8,48 @@ import { StorageService } from './services/storage.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
+  user_email: string = '';
 
   pages = [
+    {
+      title: 'Todays',
+      url: '/calendar',
+      icon: 'calendar'
+    },
+    {
+      title: 'Reminder',
+      url: '/reminder',
+      icon: 'notifications'
+    },
+    {
+      title: 'Trash',
+      url: '/deleted',
+      icon: 'trash'
+    },
+    {
+      title: 'Archive',
+      url: '/starred',
+      icon: 'star'
+    },
+    {
+      title: 'Settings',
+      url: '/settings',
+      icon: 'settings'
+    },
     {
       title: 'Logout',
       url: '/logout',
       icon: 'log-out'
     },
-    {
-      title: 'Contact',
-      url: '',
-      icon: 'person'
-    },
-    {
-      title: 'About',
-      url: '',
-      icon: 'information-circle'
-    }
   ];
-  constructor(private storageService:StorageService) { 
+  constructor(private storageService:StorageService, public authenticationService: AuthenticationService) { 
     this.initialApp()
   }
 
   async initialApp(){
+    this.authenticationService.get_user_email().subscribe((email) => {
+      this.user_email = email;
+  });
     const session_data = await this.storageService.getData();
 
     try {
@@ -37,6 +57,7 @@ export class AppComponent {
       }
     }
     catch(e){
+      console.log('jhjdssdppp')
       this.storageService.addData({});
     }
   }
