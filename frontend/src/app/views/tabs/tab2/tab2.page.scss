@@ -1,0 +1,21 @@
+.round {
+    --width: 60px;
+    --height: 60px;
+    --vertical-align: middle;
+    --padding-start: 10px;
+    --padding-end: 10px;
+  }
+
+  .hr {
+    border-bottom: 1px solid #ccc;
+    margin: 10px 0;
+    width: 100%;
+  }
+
+  ion-content{
+    --background : #F0F4FD;
+  
+    p{
+     font-weight: 300;
+    }
+  }

@@ -80,3 +80,10 @@ def todo_status(request):
             return JsonResponse({"not_ticked":True, "msg":msg})
 
     return JsonResponse({})
+
+@csrf_exempt
+def completed_todos(request):
+    all_completed_todos = Todos.objects.filter(user = request.user, done=True)
+
+    todos_list = json.loads(serialize("json", all_completed_todos))
+    return JsonResponse({"success":True, 'todos_list': todos_list})

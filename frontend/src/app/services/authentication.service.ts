@@ -66,6 +66,14 @@ export class AuthenticationService {
     return this.http.post(this.APIUrl + '/todo/status/', data, httpOptions);
   }
 
+  public completed_todos(sessionid: string){
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.get(this.APIUrl + '/completed/todos/', httpOptions);
+  }
+
   public logout(): Promise<void> {
     return this.storageService.removeData({});
   }
