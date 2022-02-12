@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { UpdateTaskPage } from '../../update-task/update-task.page';
+
 import { AuthenticationService } from '../../../services/authentication.service';
 import { StorageService } from '../../../services/storage.service';
 import { AddNewTaskPage } from '../../add-new-task/add-new-task.page';
@@ -87,6 +89,19 @@ export class Tab1Page {
         return all_data;
       }
     }
+  }
+
+  async update(selectedTask){
+    const modal = await this.modalCtlr.create({
+      component: UpdateTaskPage,
+      componentProps: {task: selectedTask}
+    })
+
+    modal.onDidDismiss().then(()=>{
+      this.get_all_todos();
+    })
+    
+    return await modal.present()
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { StorageService } from './services/storage.service';
 import { AuthenticationService } from './services/authentication.service';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -42,7 +43,7 @@ export class AppComponent {
       icon: 'log-out'
     },
   ];
-  constructor(private storageService:StorageService, public authenticationService: AuthenticationService) { 
+  constructor(private storageService:StorageService, public authenticationService: AuthenticationService, public menuCtlr:MenuController) { 
     this.initialApp()
   }
 
@@ -59,5 +60,10 @@ export class AppComponent {
     catch(e){
       this.storageService.addData({});
     }
+  }
+
+  async dismis(){
+    console.log('sksdjs')
+    await this.menuCtlr.close()
   }
 }

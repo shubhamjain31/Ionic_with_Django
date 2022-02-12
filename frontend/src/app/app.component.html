@@ -3,7 +3,12 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list>
-          <ion-list-header><ion-label class="header-title" color="primary">Docket</ion-label></ion-list-header>
+          <ion-list-header>
+            <ion-item>
+              <ion-icon name="close" slot="end" size="larger" class="ion-padding" (click)="dismis()"></ion-icon>
+              <ion-label class="header-title" color="primary">Docket</ion-label>
+            </ion-item>
+          </ion-list-header>
           <ion-note>{{user_email}}</ion-note>
           <ion-menu-toggle autoHide="false" *ngFor="let p of pages">
             <ion-item [routerLink]="[p.url]" routerLinkActive="selected" routerDirection="root" lines="none" detail="false">
