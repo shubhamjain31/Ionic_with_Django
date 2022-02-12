@@ -67,7 +67,6 @@ export class AddNewTaskPage implements OnInit {
     const session_data = await this.storageService.getData();
 
     this.todoList = this.authenticationService.todos_list(session_data['sessionid'])
-    console.log(this.authenticationService.todos_list(session_data['sessionid']));
   }
 
 }

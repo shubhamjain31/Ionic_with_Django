@@ -57,7 +57,6 @@ export class AppComponent {
       }
     }
     catch(e){
-      console.log('jhjdssdppp')
       this.storageService.addData({});
     }
   }

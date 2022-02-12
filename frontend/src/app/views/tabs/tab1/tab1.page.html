@@ -1,13 +1,20 @@
-<app-header title="Home"></app-header>
+<app-header title="Home" class="text-center"></app-header>
 
 <ion-content [fullscreen]="true">
   <ion-toolbar>
-    <ion-item lines="none">
+    <ion-item lines="none" *ngIf="loader">
       <ion-label style="font-weight: 800;font-size: 3em;">
         Today
         <p style="font-weight: 400;color: #433465 ;">{{today | date:'fullDate'}}</p>
       </ion-label>
     </ion-item>
+
+    <div *ngIf="!loader">
+      <ion-label style="font-weight: 800;font-size: 3em;">
+        <ion-skeleton-text animated style="width: 35%;">Today</ion-skeleton-text>
+        <p style="font-weight: 400;color: #433465 ;"><ion-skeleton-text animated style="width: 45%;">{{today | date:'fullDate'}}</ion-skeleton-text></p>
+      </ion-label>
+    </div>
   </ion-toolbar>
   <!-- <div class="hr"> </div> -->
 
@@ -51,9 +58,64 @@
     </ion-row>
 
   </ion-card>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="loader">
     <ion-fab-button color="secondary" (click)="addNewItem()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <div *ngIf="!todoList.length>0">
+    <ion-card *ngFor="let item of [1,2,3]; let i = index" class="ion-margin">
+      <ion-card-header>
+        
+        <ion-card-subtitle>
+          <ion-skeleton-text animated>{{item}}</ion-skeleton-text>
+        </ion-card-subtitle>
+  
+        <ion-item>
+          <ion-label> <ion-skeleton-text animated>&nbsp;{{ item}}</ion-skeleton-text></ion-label>
+        </ion-item>
+  
+      </ion-card-header>
+  
+      <ion-card-content>
+        <ion-label><ion-skeleton-text animated>Due {{item}}</ion-skeleton-text></ion-label>
+      </ion-card-content>
+  
+      <ion-row>
+      
+        <ion-item button>
+          <ion-skeleton-text animated>
+            <ion-icon name="create-outline"></ion-icon>
+            <p class="custom-margin">Update</p>
+          </ion-skeleton-text>
+        </ion-item>
+  
+        <ion-item button>
+          <ion-skeleton-text animated>
+            <ion-icon name="trash-outline"></ion-icon>
+            <p class="custom-margin">Cancel</p>
+          </ion-skeleton-text>
+        </ion-item>
+  
+        <ion-item button>
+          <ion-skeleton-text animated>
+            <ion-icon name="star"></ion-icon>
+            <p class="custom-margin">Bookmark</p>
+          </ion-skeleton-text>
+        </ion-item>
+      </ion-row>
+  
+    </ion-card>
+
+    <div *ngIf="!loader">
+      <ion-fab vertical="bottom" horizontal="end" slot="start">
+        <ion-skeleton-text animated>
+          <ion-fab-button color="secondary">
+            <ion-icon name="add"></ion-icon>
+          </ion-fab-button>
+        </ion-skeleton-text>
+      </ion-fab>
+    </div>
+  </div>
 </ion-content>

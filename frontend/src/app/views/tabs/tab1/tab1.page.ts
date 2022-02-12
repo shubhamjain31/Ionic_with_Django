@@ -12,12 +12,18 @@ import { IonicToastService } from '../../../services/ionic-toast.service';
 })
 export class Tab1Page {
   todoList: any = []
+  loader: boolean = false;
 
   today: number = Date.now();
 
   constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public modalCtlr: ModalController,
-    private ionicToastService: IonicToastService) {
-    this.get_all_todos();
+    private ionicToastService: IonicToastService) {}
+
+  ngOnInit() {
+    setTimeout(() => {
+      this.loader = true;
+      this.get_all_todos();
+    }, 3000)
   }
 
   async get_all_todos(){
