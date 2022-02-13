@@ -82,6 +82,47 @@ def todo_status(request):
     return JsonResponse({})
 
 @csrf_exempt
+def update_todo(request):
+    if request.method == "POST":
+        data            = urlencode(json.loads(request.body))
+        request.POST    = QueryDict(data)
+
+        id_            = request.POST.get('id_')
+        name           = request.POST.get('itemName')
+        dueDate        = request.POST.get('itemDueDate')
+        priority       = request.POST.get('itemPriority')
+        category       = request.POST.get('itemCategory')
+
+        if name is None:
+            return JsonResponse({"error":True, "msg":"Name is Required!"})
+
+        if priority is None:
+            return JsonResponse({"error":True, "msg":"Please Select Any Priority!"})
+
+        if dueDate is None:
+            return JsonResponse({"error":True, "msg":"Due Date is Required!"})
+
+        if category is None:
+            return JsonResponse({"error":True, "msg":"Category is Required!"})
+
+        dueDate = parse_datetime(dueDate)
+        
+        try:
+            todo_obj = Todos.objects.get(pk=id_)
+        except:
+            return JsonResponse({"error":True, "msg":'Invalid Data Found'})
+
+        todo_obj.name           = name
+        todo_obj.due_date       = dueDate
+        todo_obj.category       = category
+        todo_obj.priority       = priority
+        todo_obj.save()
+        msg = "Todo Updated!"
+        return JsonResponse({"success":True, "msg":msg})
+    return JsonResponse({})
+
+
+@csrf_exempt
 def completed_todos(request):
     all_completed_todos = Todos.objects.filter(user = request.user, done=True)
 

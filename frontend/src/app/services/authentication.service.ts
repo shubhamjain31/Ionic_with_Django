@@ -57,6 +57,15 @@ export class AuthenticationService {
     return this.http.post(this.APIUrl + '/add/todo/', data, httpOptions);
   }
 
+  public update_todo(data: any, sessionid: string){
+ 
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.post(this.APIUrl + '/update/todo/', data, httpOptions);
+  }
+
   public todo_status(data: any, session_id: string){
  
     let httpOptions = {

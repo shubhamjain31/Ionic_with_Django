@@ -60,7 +60,7 @@ export class AddNewTaskPage implements OnInit {
   }
 
   async dismis(){
-    await this.modalCtlr.dismiss(this.newTaskObj)
+    await this.modalCtlr.dismiss(this.newTaskObj);
   }
 
   async getAllTask(){
