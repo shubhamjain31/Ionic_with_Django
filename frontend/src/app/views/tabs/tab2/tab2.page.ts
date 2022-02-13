@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
+import { UpdateTaskPage } from '../../update-task/update-task.page';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { StorageService } from '../../../services/storage.service';
 
@@ -11,7 +14,7 @@ export class Tab2Page {
   todoList: any = []
   loader: boolean = false;
 
-  constructor(public authenticationService: AuthenticationService, private storageService:StorageService) {}
+  constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public modalCtlr: ModalController) {}
 
   ngOnInit() {
     setTimeout(() => {
@@ -31,6 +34,19 @@ export class Tab2Page {
     }, err => {
       console.log(err);
     });
+  }
+
+  async open(selectedTask){
+    const modal = await this.modalCtlr.create({
+      component: UpdateTaskPage,
+      componentProps: {task: selectedTask}
+    })
+
+    // modal.onDidDismiss().then(()=>{
+    //   this.get_all_todos();
+    // })
+    
+    return await modal.present()
   }
 
 }

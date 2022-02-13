@@ -17,7 +17,7 @@
         <ion-icon *ngIf="item.fields.priority === 'low'" color="success" size="small" name="ellipse"></ion-icon>
         <ion-icon *ngIf="item.fields.priority === 'middle'" color="warning" size="small" name="ellipse"></ion-icon>
         <ion-label [style.text-decoration]="item.fields.done ? 'line-through' : 'none'"> &nbsp;{{ item.fields.name}}</ion-label>
-        <ion-button shape="round" color="dark" class="round">Open</ion-button>
+        <ion-button shape="round" color="dark" class="round" (click)="open(item)">Open</ion-button>
       </ion-item>
 
     </ion-card-header>

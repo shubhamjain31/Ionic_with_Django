@@ -15,7 +15,7 @@ from backend.decorators import *
 
 @csrf_exempt
 def all_todos(request):
-    todos = Todos.objects.filter(user = request.user)
+    todos = Todos.objects.filter(user = request.user).order_by('-date_created')
 
     all_todos = json.loads(serialize("json", todos))
     return JsonResponse({"success":True, 'all_todos': all_todos})
