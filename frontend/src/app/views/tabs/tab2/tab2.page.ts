@@ -13,6 +13,7 @@ import { StorageService } from '../../../services/storage.service';
 export class Tab2Page {
   todoList: any = []
   loader: boolean = false;
+  no_todo: string;
 
   constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public modalCtlr: ModalController) {}
 
@@ -20,6 +21,7 @@ export class Tab2Page {
     setTimeout(() => {
       this.loader = true;
       this.all_completed_todos();
+      this.no_todo  = "No Todos";
     }, 3000)
   }
 

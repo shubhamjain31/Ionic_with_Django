@@ -18,6 +18,10 @@
   </ion-toolbar>
   <!-- <div class="hr"> </div> -->
 
+  <div *ngIf="todoList.length === 0">
+    <p *ngIf="loader" class="no-data">{{no_todo}}</p>
+  </div>
+  
   <ion-card *ngFor="let item of todoList; let i = index" class="ion-margin">
     <ion-card-header>
       
@@ -46,12 +50,12 @@
         <p class="custom-margin">Update</p>
       </ion-item>
 
-      <ion-item button (click)="delete(item.key)">
+      <ion-item button (click)="presentConfirm(item)">
         <ion-icon name="trash-outline"></ion-icon>
         <p class="custom-margin">Cancel</p>
       </ion-item>
 
-      <ion-item button (click)="starred(item.key)">
+      <ion-item button (click)="starred(item)">
         <ion-icon name="star"></ion-icon>
         <p class="custom-margin">Bookmark</p>
       </ion-item>
@@ -64,7 +68,7 @@
     </ion-fab-button>
   </ion-fab>
 
-  <div *ngIf="!todoList.length>0">
+  <div *ngIf="!todoList.length>0 && no_todo != 'No Todos'">
     <ion-card *ngFor="let item of [1,2,3]; let i = index" class="ion-margin">
       <ion-card-header>
         

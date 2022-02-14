@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 import { UpdateTaskPage } from '../../update-task/update-task.page';
 
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -17,9 +17,10 @@ export class Tab1Page {
   loader: boolean = false;
 
   today: number = Date.now();
+  no_todo: string;
 
   constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public modalCtlr: ModalController,
-    private ionicToastService: IonicToastService) {}
+    private ionicToastService: IonicToastService, private alertCtrl: AlertController) {}
 
   ngOnInit() {
     setTimeout(() => {
@@ -35,6 +36,7 @@ export class Tab1Page {
     .subscribe((resp: any) => {
       if (resp["success"]){
         this.todoList = resp['all_todos'];
+        this.no_todo  = "No Todos";
       }
     }, err => {
       console.log(err);
@@ -102,6 +104,42 @@ export class Tab1Page {
     })
     
     return await modal.present()
+  }
+
+  async delete(item: number) {
+    const session_data = await this.storageService.getData();
+
+    let data_ ={
+      'id_':      item['pk']
+    }
+
+    this.authenticationService.delete_todo(data_, session_data.sessionid).subscribe((resp: any) => {
+      if(resp["success"]){
+        this.ionicToastService.showToast(resp["msg"], 'success');
+        this.get_all_todos();
+      }
+    })
+  }
+
+  async presentConfirm(item: number) {
+    let alert: any = await this.alertCtrl.create({
+      subHeader: 'Confirm Delete',
+      message: 'Do you want to delete this todo?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {}
+        },
+        {
+          text: 'Delete',
+          handler: () => {
+            this.delete(item);
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 
 }

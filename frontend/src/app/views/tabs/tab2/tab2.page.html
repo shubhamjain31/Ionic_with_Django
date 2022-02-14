@@ -5,6 +5,10 @@
     
   </ion-toolbar>
 
+  <div *ngIf="todoList.length === 0">
+    <p *ngIf="loader" class="no-data">{{no_todo}}</p>
+  </div>
+
   <ion-card *ngFor="let item of todoList; let i = index" class="ion-margin">
     <ion-card-header>
       
@@ -27,7 +31,7 @@
     </ion-card-content>
   </ion-card>
 
-  <div *ngIf="!todoList.length>0">
+  <div *ngIf="!todoList.length>0 && no_todo != 'No Todos'">
     <ion-card *ngFor="let item of [1 ,2, 3 ,4]; let i = index" class="ion-margin">
       <ion-card-header>
         

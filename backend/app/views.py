@@ -121,6 +121,25 @@ def update_todo(request):
         return JsonResponse({"success":True, "msg":msg})
     return JsonResponse({})
 
+@csrf_exempt
+def delete_todo(request):
+    if request.method == "POST":
+        data            = urlencode(json.loads(request.body))
+        request.POST    = QueryDict(data)
+
+        id_           = request.POST.get('id_')
+
+        try:
+            todo_obj = Todos.objects.get(pk=id_)
+        except:
+            return JsonResponse({"error":True, "msg":'Invalid Data Found'})
+
+        todo_obj.delete()
+
+        msg = "Todo Deleted!"
+        return JsonResponse({"success":True, "msg":msg})
+    return JsonResponse({})
+
 
 @csrf_exempt
 def completed_todos(request):
