@@ -140,6 +140,27 @@ def delete_todo(request):
         return JsonResponse({"success":True, "msg":msg})
     return JsonResponse({})
 
+@csrf_exempt
+def bookmark_todo(request):
+    if request.method == "POST":
+        data            = urlencode(json.loads(request.body))
+        request.POST    = QueryDict(data)
+
+        id_           = request.POST.get('id_')
+        status        = request.POST.get('status')
+
+        try:
+            todo_obj = Todos.objects.get(pk=id_)
+        except:
+            return JsonResponse({"error":True, "msg":'Invalid Data Found'})
+
+        todo_obj.bookmark = str_to_bool(status)
+        todo_obj.save()
+
+        msg = "Todo Bookmarked!"
+        return JsonResponse({"success":True, "msg":msg})
+    return JsonResponse({})
+
 
 @csrf_exempt
 def completed_todos(request):
@@ -147,3 +168,11 @@ def completed_todos(request):
 
     todos_list = json.loads(serialize("json", all_completed_todos))
     return JsonResponse({"success":True, 'todos_list': todos_list})
+
+def str_to_bool(status):
+    if status == 'True':
+        return True
+    elif status == 'False':
+        return False
+    else:
+        raise ValueError

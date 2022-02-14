@@ -55,8 +55,8 @@
         <p class="custom-margin">Cancel</p>
       </ion-item>
 
-      <ion-item button (click)="starred(item)">
-        <ion-icon name="star"></ion-icon>
+      <ion-item button (click)="starred(item.fields.bookmark, item)">
+        <ion-icon name="star" [color]="item.fields.bookmark ? 'danger' : 'dark'"></ion-icon>
         <p class="custom-margin">Bookmark</p>
       </ion-item>
     </ion-row>

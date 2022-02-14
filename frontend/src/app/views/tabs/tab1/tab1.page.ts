@@ -118,6 +118,9 @@ export class Tab1Page {
         this.ionicToastService.showToast(resp["msg"], 'success');
         this.get_all_todos();
       }
+      if(resp["error"]){
+        this.ionicToastService.showToast(resp["msg"], 'danger');
+      }
     })
   }
 
@@ -140,6 +143,32 @@ export class Tab1Page {
       ]
     });
     await alert.present();
+  }
+
+  async starred(status: boolean, item: any){
+    const session_data = await this.storageService.getData();
+
+    if(status === false){
+      status = true
+    }
+    else{
+      status = false
+    }
+
+    let data_ ={
+      'id_':      item['pk'],
+      'status':   status
+    }
+
+    this.authenticationService.bookmark_todo(data_, session_data.sessionid).subscribe((resp: any) => {
+      if(resp["success"]){
+        this.ionicToastService.showToast(resp["msg"], 'success');
+        this.get_all_todos();
+      }
+      if(resp["error"]){
+        this.ionicToastService.showToast(resp["msg"], 'danger');
+      }
+    })
   }
 
 }
