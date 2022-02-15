@@ -9,7 +9,7 @@ import { map, tap, switchMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  APIUrl = 'http://localhost:8000';
+  APIUrl = environment['API'];
   private httpOptions: any;
 
   sessionid: any;
