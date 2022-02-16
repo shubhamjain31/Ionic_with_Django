@@ -7,6 +7,7 @@ import { Tab2Page } from './tab2.page';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 import { HeaderComponent } from 'src/app/components/header/header.component';
+import { LoadingComponent } from 'src/app/components/loading/loading.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { HeaderComponent } from 'src/app/components/header/header.component';
     FormsModule,
     Tab2PageRoutingModule
   ],
-  declarations: [Tab2Page,HeaderComponent]
+  declarations: [Tab2Page, HeaderComponent, LoadingComponent]
 })
 export class Tab2PageModule {}

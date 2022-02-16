@@ -1,29 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { UpdateTaskPage } from '../../update-task/update-task.page';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { StorageService } from '../../../services/storage.service';
+import { GetSetDataService } from '../../../services/get-set-data.service';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit {
   todoList: any = []
   loader: boolean = false;
   no_todo: string;
 
-  constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public modalCtlr: ModalController) {}
+  constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public modalCtlr: ModalController,
+    public getSetDataService: GetSetDataService) {}
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  ionViewWillEnter() {
+    let todo_data = this.getSetDataService.get_done_todo_data();
     setTimeout(() => {
       this.loader = true;
-      this.all_completed_todos();
+      if(todo_data.length === 0){
+        this.all_completed_todos();
+      }
+      else{
+        this.todoList = todo_data;
+      }
       this.no_todo  = "No Todos";
     }, 3000)
-  }
+   }
 
   async all_completed_todos(){
     const session_data = await this.storageService.getData();

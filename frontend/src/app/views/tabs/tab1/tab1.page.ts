@@ -21,7 +21,7 @@ export class Tab1Page {
   no_todo: string;
 
   constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public modalCtlr: ModalController,
-    private ionicToastService: IonicToastService, private alertCtrl: AlertController,public getSetDataService: GetSetDataService) {}
+    private ionicToastService: IonicToastService, private alertCtrl: AlertController, public getSetDataService: GetSetDataService) {}
 
   ngOnInit() {
     setTimeout(() => {

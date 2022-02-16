@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class GetSetDataService {
   todo_data: any = [];
+  done_todo_list: any = [];
 
   constructor() { }
 
@@ -13,7 +14,11 @@ export class GetSetDataService {
   }
 
   get_todo_data(){
-    return {'todo_data': this.todo_data}
+    return this.todo_data || [];
+  }
+
+  get_done_todo_data(){
+    return this.done_todo_list || [];
   }
 
   todo_completed_or_not(all_data: any, single_data: number, status: boolean){
@@ -29,6 +34,7 @@ export class GetSetDataService {
     for(let i=0; i<all_data.length; i++){
       if(all_data[i]['pk'] === single_data){
         all_data[i]['fields']['bookmark'] = status;
+        this.done_todo_list = all_data;
         return all_data;
       }
     }
