@@ -4,6 +4,11 @@ import { LoginGuardService } from "./guards/login-guard.service";
 
 const routes: Routes = [
   {
+    path: 'register',
+    loadChildren: () => import('./views/register/register.module').then( m => m.RegisterPageModule),
+    canActivate: [LoginGuardService]
+  },
+  {
     path: '',
     children: [
       {
@@ -16,11 +21,6 @@ const routes: Routes = [
         canActivate: [LoginGuardService]
       },
     ]
-  },
-  {
-    path: 'register',
-    loadChildren: () => import('./views/register/register.module').then( m => m.RegisterPageModule),
-    canActivate: [LoginGuardService]
   },
   {
     path: 'add-new-task',
