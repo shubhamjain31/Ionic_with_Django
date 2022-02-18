@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { StorageService } from './services/storage.service';
 import { AuthenticationService } from './services/authentication.service';
 import { MenuController } from '@ionic/angular';
+import { Platform } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -43,7 +45,8 @@ export class AppComponent {
       icon: 'log-out'
     },
   ];
-  constructor(private storageService:StorageService, public authenticationService: AuthenticationService, public menuCtlr:MenuController) { 
+  constructor(private storageService:StorageService, public authenticationService: AuthenticationService, public menuCtlr:MenuController, 
+    private platform: Platform, private router: Router) { 
     this.initialApp()
   }
 
@@ -60,10 +63,21 @@ export class AppComponent {
     catch(e){
       this.storageService.addData({});
     }
+
+    this.platform.ready().then(() => {
+
+      this.authenticationService.authState.subscribe(state => {
+
+        if (state) {
+          this.router.navigate(['tabs']);
+        } else {
+          this.router.navigate(['login']);
+        }
+      });
+    });
   }
 
   async dismis(){
-    console.log('sksdjs')
     await this.menuCtlr.close()
   }
 }

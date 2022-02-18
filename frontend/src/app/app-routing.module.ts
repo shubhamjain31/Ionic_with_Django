@@ -1,12 +1,10 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { LoginGuardService } from "./guards/login-guard.service";
 
 const routes: Routes = [
   {
     path: 'register',
-    loadChildren: () => import('./views/register/register.module').then( m => m.RegisterPageModule),
-    canActivate: [LoginGuardService]
+    loadChildren: () => import('./views/register/register.module').then( m => m.RegisterPageModule)
   },
   {
     path: '',
@@ -17,8 +15,7 @@ const routes: Routes = [
       },
       {
         path: 'login',
-        loadChildren: () => import('./views/login/login.module').then(m => m.LoginPageModule),
-        canActivate: [LoginGuardService]
+        loadChildren: () => import('./views/login/login.module').then(m => m.LoginPageModule)
       },
     ]
   },
