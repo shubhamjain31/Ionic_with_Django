@@ -122,6 +122,14 @@ export class AuthenticationService {
     return this.http.get(this.APIUrl + '/completed/todos/', httpOptions);
   }
 
+  public user_profile(sessionid: string){
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.get(this.APIUrl + '/profile/', httpOptions);
+  }
+
   public logout(): Promise<void> {
     this.authState.next(false);
     return this.storageService.removeData({});

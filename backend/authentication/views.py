@@ -3,11 +3,14 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model, authenticate, login, logout
 from django.http import JsonResponse
 from django.middleware import csrf
+from django.db.models import Count
 
 from urllib.parse import urlencode
 from django.http import QueryDict
 
 import json
+
+from app.models import Todos
 
 # Create your views here.
 
@@ -33,3 +36,23 @@ def login_user(request):
             msg = 'Invalid credentials'
             return JsonResponse({'msg':msg, 'error':True})   
     return JsonResponse({})
+
+@csrf_exempt
+def user_profile(request):
+
+    total_completed = Todos.objects.filter(user=request.user, done=True).count()
+    total_bookmark  = Todos.objects.filter(user=request.user, bookmark=True).count()
+    total_todos     = Todos.objects.filter(user=request.user).count()
+    
+    user_data = {
+        'fullname':         request.user.fullname,
+        'username':         request.user.username,
+        'email':            request.user.email,
+        'mobile':           request.user.mobile,
+        'joined':           request.user.date_joined,
+        'total_completed':  total_completed,
+        'total_bookmark':   total_bookmark,
+        'total_todos':      total_todos
+    }
+
+    return JsonResponse({'success':True, 'user_data':user_data})
