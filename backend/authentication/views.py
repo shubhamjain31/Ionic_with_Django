@@ -39,20 +39,13 @@ def login_user(request):
 
 @csrf_exempt
 def user_profile(request):
-
-    total_completed = Todos.objects.filter(user=request.user, done=True).count()
-    total_bookmark  = Todos.objects.filter(user=request.user, bookmark=True).count()
-    total_todos     = Todos.objects.filter(user=request.user).count()
     
     user_data = {
         'fullname':         request.user.fullname,
         'username':         request.user.username,
         'email':            request.user.email,
         'mobile':           request.user.mobile,
-        'joined':           request.user.date_joined,
-        'total_completed':  total_completed,
-        'total_bookmark':   total_bookmark,
-        'total_todos':      total_todos
+        'joined':           request.user.date_joined
     }
 
     return JsonResponse({'success':True, 'user_data':user_data})

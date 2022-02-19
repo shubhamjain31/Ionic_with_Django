@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 
 import { UpdateTaskPage } from '../../update-task/update-task.page';
-import { AuthenticationService } from '../../../services/authentication.service';
-import { StorageService } from '../../../services/storage.service';
 import { GetSetDataService } from '../../../services/get-set-data.service';
 
 @Component({
@@ -14,38 +12,36 @@ import { GetSetDataService } from '../../../services/get-set-data.service';
 export class Tab2Page implements OnInit {
   todoList: any = []
   loader: boolean = false;
+  is_data: boolean = false;
   no_todo: string;
 
-  constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public modalCtlr: ModalController,
-    public getSetDataService: GetSetDataService) {}
+  constructor(public modalCtlr: ModalController, public getSetDataService: GetSetDataService) {}
 
-  ngOnInit() {}
-
-  ionViewWillEnter() {
-    let todo_data = this.getSetDataService.get_done_todo_data();
+  ngOnInit() {
     setTimeout(() => {
       this.loader = true;
-      if(todo_data.length === 0){
-        this.all_completed_todos();
-      }
-      else{
-        this.todoList = todo_data;
-      }
+      this.todoList = this.getSetDataService.completed_todo_list()
       this.no_todo  = "No Todos";
+
+      this.is_data = true;
     }, 3000)
+  }
+
+  ionViewWillEnter() {
+    if(this.is_data){
+      this.loader = true;
+      this.todoList = this.getSetDataService.completed_todo_list()
+      this.no_todo  = "No Todos";
+      }
    }
 
-  async all_completed_todos(){
-    const session_data = await this.storageService.getData();
-
-    this.authenticationService.completed_todos(session_data.sessionid)
-    .subscribe((resp: any) => {
-      if (resp["success"]){
-        this.todoList = resp['todos_list'];
-      }
-    }, err => {
-      console.log(err);
-    });
+   ionViewWillLeave() {
+    if(this.todoList === 0){
+      this.is_data = false;
+    }
+    // this.todoList = [];
+    // this.no_todo = '';
+    // this.loader = false;
   }
 
   async open(selectedTask){
@@ -55,7 +51,6 @@ export class Tab2Page implements OnInit {
     })
 
     // modal.onDidDismiss().then(()=>{
-    //   this.get_all_todos();
     // })
     
     return await modal.present()

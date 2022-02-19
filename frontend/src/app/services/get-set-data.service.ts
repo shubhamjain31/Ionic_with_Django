@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 })
 export class GetSetDataService {
   todo_data: any = [];
-  done_todo_list: any = [];
 
   constructor() { }
 
@@ -15,10 +14,6 @@ export class GetSetDataService {
 
   get_todo_data(){
     return this.todo_data || [];
-  }
-
-  get_done_todo_data(){
-    return this.done_todo_list || [];
   }
 
   todo_completed_or_not(all_data: any, single_data: number, status: boolean){
@@ -34,7 +29,6 @@ export class GetSetDataService {
     for(let i=0; i<all_data.length; i++){
       if(all_data[i]['pk'] === single_data){
         all_data[i]['fields']['bookmark'] = status;
-        this.done_todo_list = all_data;
         return all_data;
       }
     }
@@ -43,5 +37,37 @@ export class GetSetDataService {
   delete_todo(all_data: any, index: number){
     all_data.splice(index, 1);
     return all_data;
+  }
+
+  all_counts(){
+    let total_bookmark = 0, total_todos = 0, total_completed_todos = 0;
+
+    for(let i=0; i<this.todo_data.length; i++){
+      if(this.todo_data[i]['fields']['done'] === true){
+        total_completed_todos = total_completed_todos + 1;
+      }
+
+      if(this.todo_data[i]['fields']['bookmark'] === true){
+        total_bookmark = total_bookmark + 1;
+      }
+    }
+
+    let data_ = {
+      total_completed_todos:  total_completed_todos,
+      total_bookmark:         total_bookmark,
+      total_todos:            this.todo_data.length
+    }
+    return data_;
+  }
+
+  completed_todo_list(){
+    let all_todos: any = [];
+
+    for(let i=0; i<this.todo_data.length; i++){
+      if(this.todo_data[i]['fields']['done'] === true){
+        all_todos.push(this.todo_data[i]);
+      }
+    }
+    return all_todos;
   }
 }

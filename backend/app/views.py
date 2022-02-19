@@ -161,14 +161,6 @@ def bookmark_todo(request):
         return JsonResponse({"success":True, "msg":msg})
     return JsonResponse({})
 
-
-@csrf_exempt
-def completed_todos(request):
-    all_completed_todos = Todos.objects.filter(user = request.user, done=True)
-
-    todos_list = json.loads(serialize("json", all_completed_todos))
-    return JsonResponse({"success":True, 'todos_list': todos_list})
-
 def str_to_bool(status):
     if status == 'True':
         return True

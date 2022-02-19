@@ -24,10 +24,7 @@ export class Tab1Page {
     private ionicToastService: IonicToastService, private alertCtrl: AlertController, public getSetDataService: GetSetDataService) {}
 
   ngOnInit() {
-    setTimeout(() => {
-      this.loader = true;
-      this.get_all_todos();
-    }, 3000)
+    this.get_all_todos();
   }
 
   async get_all_todos(){
@@ -36,10 +33,14 @@ export class Tab1Page {
     this.authenticationService.todos_list(session_data.sessionid)
     .subscribe((resp: any) => {
       if (resp["success"]){
-        this.todoList = resp['all_todos'];
+        
+        setTimeout(() => {
+          this.loader     = true;
+          this.todoList   = resp['all_todos'];
+          this.no_todo    = "No Todos";
+        }, 3000)
 
-        this.getSetDataService.set_todo_data(this.todoList);
-        this.no_todo  = "No Todos";
+        this.getSetDataService.set_todo_data(resp['all_todos']);
       }
     }, err => {
       console.log(err);
