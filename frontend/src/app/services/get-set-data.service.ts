@@ -39,8 +39,20 @@ export class GetSetDataService {
     return all_data;
   }
 
+  update_todo(single_data: any){
+    for(let i=0; i<this.todo_data.length; i++){
+      if(this.todo_data[i]['pk'] === single_data['id_']){
+        this.todo_data[i]['fields']['name']     = single_data['itemName'];
+        this.todo_data[i]['fields']['due_date'] = single_data['itemDueDate'];
+        this.todo_data[i]['fields']['priority'] = single_data['itemPriority'];
+        this.todo_data[i]['fields']['category'] = single_data['itemCategory'];
+      }
+    }
+    return this.todo_data;
+  }
+
   all_counts(){
-    let total_bookmark = 0, total_todos = 0, total_completed_todos = 0;
+    let total_bookmark = 0, total_completed_todos = 0;
 
     for(let i=0; i<this.todo_data.length; i++){
       if(this.todo_data[i]['fields']['done'] === true){

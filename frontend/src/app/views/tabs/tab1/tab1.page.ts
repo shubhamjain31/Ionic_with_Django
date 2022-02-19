@@ -93,7 +93,7 @@ export class Tab1Page {
     })
 
     modal.onDidDismiss().then(()=>{
-      this.get_all_todos();
+      // this.get_all_todos();
     })
     
     return await modal.present()

@@ -4,6 +4,7 @@ import { ModalController } from '@ionic/angular';
 import { StorageService } from '../../services/storage.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { IonicToastService } from '../../services/ionic-toast.service';
+import { GetSetDataService } from '../../services/get-set-data.service';
 
 @Component({
   selector: 'app-update-task',
@@ -22,7 +23,7 @@ export class UpdateTaskPage implements OnInit {
   itemCategory: string;
 
   constructor(public modalCtlr:ModalController, private storageService:StorageService, private ionicToastService: IonicToastService,
-    private authenticationService: AuthenticationService) { }
+    private authenticationService: AuthenticationService, public getSetDataService: GetSetDataService) { }
 
   ngOnInit() {
     this.categories.push('work');
@@ -39,19 +40,24 @@ export class UpdateTaskPage implements OnInit {
   }
 
   selectCategory(index: number){
-    this.categorySelectedCategory = this.categories[index]
-    console.log(this.categorySelectedCategory);
+    this.categorySelectedCategory = this.categories[index];
   }
 
   async update(){
-    const session_data = await this.storageService.getData();
+    if(this.itemName.trim().length === 0){
+      this.ionicToastService.showToast('Write Your Task', 'danger');
+      return
+    }
 
+    const session_data = await this.storageService.getData();
+    
     this.newTaskObj = {itemName:      this.itemName, 
-                      itemDueDate:    this.itemDueDate, 
-                      itemPriority:   this.itemPriority,
-                      itemCategory:   this.categorySelectedCategory,
-                      id_:            this.task.pk
-                    }
+      itemDueDate:    this.itemDueDate, 
+      itemPriority:   this.itemPriority,
+      itemCategory:   this.categorySelectedCategory,
+      id_:            this.task.pk
+    }
+    this.getSetDataService.update_todo(this.newTaskObj);
                     
     this.authenticationService.update_todo(this.newTaskObj, session_data['sessionid']).subscribe((data: any)=>{
       if (data["success"]){
