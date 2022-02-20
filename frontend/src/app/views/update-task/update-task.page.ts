@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 
 import { StorageService } from '../../services/storage.service';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -23,17 +23,24 @@ export class UpdateTaskPage implements OnInit {
   itemCategory: string;
 
   constructor(public modalCtlr:ModalController, private storageService:StorageService, private ionicToastService: IonicToastService,
-    private authenticationService: AuthenticationService, public getSetDataService: GetSetDataService) { }
+    private authenticationService: AuthenticationService, public getSetDataService: GetSetDataService, public alertController: AlertController) { }
 
-  ngOnInit() {
-    this.categories.push('work');
-    this.categories.push('personal');
+  ngOnInit() { }
+
+  ionViewWillEnter() {
+    let all_categories: any = this.getSetDataService.category_list();
+    if(all_categories.length > 2){
+      this.categories = all_categories;
+    }
+    else{
+      this.categories = ['work', 'personal'];
+    }
 
     this.itemName                   = this.task.fields.name;
     this.itemDueDate                = this.task.fields.due_date;
     this.itemPriority               = this.task.fields.priority;
     this.categorySelectedCategory   = this.task.fields.category;
-  }
+   }
 
   async dismis(){
     await this.modalCtlr.dismiss()
@@ -70,5 +77,40 @@ export class UpdateTaskPage implements OnInit {
 
       this.dismis();
     })
+  }
+
+  new_category() {
+    this.alertController.create({
+      header: 'Add New Category',
+      // subHeader: '',
+      // message: '',
+      inputs: [
+        {
+          name: 'Category',
+          placeholder: 'Enter Category',
+          
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: (data: any) => {
+            
+          }
+        },
+        {
+          text: 'Add',
+          handler: (data: any) => {
+            if(data['Category'].trim() === ''){
+              this.ionicToastService.showToast('Category Cannot Be Empty!', 'danger');
+              return;
+            }
+            this.categories.push(data['Category'])
+          }
+        }
+      ]
+    }).then(res => {
+      res.present();
+    });
   }
 }

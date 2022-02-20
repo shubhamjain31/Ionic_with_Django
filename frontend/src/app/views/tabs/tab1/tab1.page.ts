@@ -16,6 +16,7 @@ import { IonicToastService } from '../../../services/ionic-toast.service';
 export class Tab1Page {
   todoList: any = []
   loader: boolean = false;
+  is_data: boolean = false;
 
   today: number = Date.now();
   no_todo: string;
@@ -47,11 +48,28 @@ export class Tab1Page {
     });
   }
 
+  ionViewWillEnter() {
+    if(this.is_data){
+      this.loader = true;
+      this.todoList = this.getSetDataService.get_todo_data()
+      this.no_todo  = "No Todos";
+      }
+   }
+
+   ionViewWillLeave() {
+    if(this.todoList === 0){
+      this.is_data = false;
+    }
+  }
+
   async addNewItem() {
     const modal = await this.modalCtlr.create({
       component: AddNewTaskPage,
     })
     modal.onDidDismiss().then(newTask =>{
+      this.loader     = false;
+      this.no_todo    = '';
+      this.todoList   = [];
       this.get_all_todos();
     })
     return await modal.present()
