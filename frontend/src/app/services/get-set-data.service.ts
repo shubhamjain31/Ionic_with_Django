@@ -82,4 +82,12 @@ export class GetSetDataService {
     }
     return all_todos;
   }
+
+  category_list(){
+    let categories: any = [];
+    for(let i=0; i<this.todo_data.length; i++){
+      categories.push(this.todo_data[i]['fields']['category'])
+    }
+    return [...new Set(categories)]
+  }
 }
