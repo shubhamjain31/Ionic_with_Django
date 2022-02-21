@@ -25,6 +25,17 @@ export class GetSetDataService {
     return this.todo_data || [];
   }
 
+  all_todos(){
+    let all_todos: any = [];
+
+    for(let i=0; i<this.todo_data.length; i++){
+      if(this.todo_data[i]['fields']['trash'] != true){
+        all_todos.push(this.todo_data[i]);
+      }
+    }
+    return all_todos;
+  }
+
   todo_completed_or_not(all_data: any, single_data: number, status: boolean){
     for(let i=0; i<all_data.length; i++){
       if(all_data[i]['pk'] === single_data){
@@ -98,5 +109,16 @@ export class GetSetDataService {
       categories.push(this.todo_data[i]['fields']['category']);
     }
     return [...new Set(categories)];
+  }
+
+  trash_todos(){
+    let all_todos: any = [];
+
+    for(let i=0; i<this.todo_data.length; i++){
+      if(this.todo_data[i]['fields']['trash'] === true){
+        all_todos.push(this.todo_data[i]);
+      }
+    }
+    return all_todos;
   }
 }

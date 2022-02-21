@@ -27,6 +27,14 @@ const routes: Routes = [
     path: 'update-task',
     loadChildren: () => import('./views/update-task/update-task.module').then( m => m.UpdateTaskPageModule)
   },
+  {
+    path: 'trash',
+    loadChildren: () => import('./views/trash/trash.module').then( m => m.TrashPageModule)
+  },
+  { 
+    path: '**', 
+    redirectTo: '/login',
+  },
 ];
 @NgModule({
   imports: [

@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
-import { Storage } from '@ionic/storage-angular';
 import { UpdateTaskPage } from '../../update-task/update-task.page';
 
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -23,8 +22,7 @@ export class Tab1Page {
   no_todo: string;
 
   constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public modalCtlr: ModalController,
-    private ionicToastService: IonicToastService, private alertCtrl: AlertController, public getSetDataService: GetSetDataService,
-    private storage: Storage) {}
+    private ionicToastService: IonicToastService, private alertCtrl: AlertController, public getSetDataService: GetSetDataService) {}
 
   ngOnInit() {
     this.get_all_todos();
@@ -34,7 +32,6 @@ export class Tab1Page {
     let session_data: any;
     if(Object.keys(this.getSetDataService.get_session_data()).length != 0){
       session_data = this.getSetDataService.get_session_data();
-
     }
     else{
       session_data = await this.storageService.getData();
@@ -44,13 +41,13 @@ export class Tab1Page {
     .subscribe((resp: any) => {
       if (resp["success"]){
         
+        this.getSetDataService.set_todo_data(resp['all_todos']);
         setTimeout(() => {
           this.loader     = true;
-          this.todoList   = resp['all_todos'];
+          this.todoList   = this.getSetDataService.all_todos();
           this.no_todo    = "No Todos";
         }, 3000)
 
-        this.getSetDataService.set_todo_data(resp['all_todos']);
       }
     }, err => {
       console.log(err);

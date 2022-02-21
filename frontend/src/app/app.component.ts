@@ -26,7 +26,7 @@ export class AppComponent {
     },
     {
       title: 'Trash',
-      url: '/deleted',
+      url: '/trash',
       icon: 'trash'
     },
     {

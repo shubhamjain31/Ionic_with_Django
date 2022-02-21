@@ -134,7 +134,9 @@ def delete_todo(request):
         except:
             return JsonResponse({"error":True, "msg":'Invalid Data Found'})
 
-        todo_obj.delete()
+        todo_obj.trash = True
+        todo_obj.save()
+        # todo_obj.delete()
 
         msg = "Todo Deleted!"
         return JsonResponse({"success":True, "msg":msg})
