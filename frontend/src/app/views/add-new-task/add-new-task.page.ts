@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
+import { ModalController, AlertController } from '@ionic/angular';
 
 import { AuthenticationService } from '../../services/authentication.service';
 import { StorageService } from '../../services/storage.service';

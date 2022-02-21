@@ -5,8 +5,17 @@ import { Injectable } from '@angular/core';
 })
 export class GetSetDataService {
   todo_data: any = [];
+  session_data: any = {};
 
   constructor() { }
+
+  set_session_data(data){
+    return this.session_data = data;
+  }
+
+  get_session_data(){
+    return this.session_data;
+  }
 
   set_todo_data(data){
     this.todo_data = data;

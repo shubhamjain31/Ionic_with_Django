@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
 import { UpdateTaskPage } from '../../update-task/update-task.page';
 
 import { AuthenticationService } from '../../../services/authentication.service';
@@ -22,14 +23,22 @@ export class Tab1Page {
   no_todo: string;
 
   constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public modalCtlr: ModalController,
-    private ionicToastService: IonicToastService, private alertCtrl: AlertController, public getSetDataService: GetSetDataService) {}
+    private ionicToastService: IonicToastService, private alertCtrl: AlertController, public getSetDataService: GetSetDataService,
+    private storage: Storage) {}
 
   ngOnInit() {
     this.get_all_todos();
   }
 
   async get_all_todos(){
-    const session_data = await this.storageService.getData();
+    let session_data: any;
+    if(Object.keys(this.getSetDataService.get_session_data()).length != 0){
+      session_data = this.getSetDataService.get_session_data();
+
+    }
+    else{
+      session_data = await this.storageService.getData();
+    }
 
     this.authenticationService.todos_list(session_data.sessionid)
     .subscribe((resp: any) => {

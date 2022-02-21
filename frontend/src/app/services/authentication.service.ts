@@ -6,6 +6,7 @@ import { BehaviorSubject, from, Observable, Subject } from 'rxjs';
 import { map, tap, switchMap } from 'rxjs/operators';
 import { Storage } from '@ionic/storage-angular';
 import { Platform } from '@ionic/angular';
+import { GetSetDataService } from '../services/get-set-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,8 @@ export class AuthenticationService {
 
   authState = new BehaviorSubject(false);
   
-  constructor(private http: HttpClient, private storageService:StorageService, private storage: Storage, private platform: Platform) { 
+  constructor(private http: HttpClient, private storageService:StorageService, private storage: Storage, private platform: Platform,
+    public getSetDataService: GetSetDataService) { 
     this.platform.ready().then(() => {
       this.ifLoggedIn();
     });
@@ -44,6 +46,7 @@ export class AuthenticationService {
       switchMap(session_data => {
         this.user_email.next(session_data['email']);
         this.authState.next(true);
+        this.getSetDataService.set_session_data({"sessionid": session_data['sessionid'], "csrf": session_data['csrf'], 'email': session_data['email']});
         return this.storageService.addData({"sessionid": session_data['sessionid'], "csrf": session_data['csrf'], 'email': session_data['email']}); 
       })
     );
