@@ -8,8 +8,11 @@ import { Component, Input, OnInit } from '@angular/core';
 export class HeaderComponent implements OnInit {
 
   @Input() title;
+  @Input() isBack;
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isBack = JSON.parse(this.isBack);            // convert string to boolean
+  }
 
 }

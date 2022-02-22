@@ -194,8 +194,8 @@ def undo_todo(request):
         except:
             return JsonResponse({"error":True, "msg":'Invalid Data Found'})
 
-        # todo_obj.trash = False
-        # todo_obj.save()
+        todo_obj.trash = False
+        todo_obj.save()
 
         msg = ""
         return JsonResponse({"success":True, "msg":msg})

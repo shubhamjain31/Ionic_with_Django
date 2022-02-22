@@ -54,9 +54,15 @@ export class GetSetDataService {
     }
   }
 
-  trash_todo(all_data: any, index: number){
+  trash_todo(all_data: any, item: any, index: number){
     all_data.splice(index, 1);
-    return all_data;
+    
+    for(let i=0; i<this.todo_data.length; i++){
+      if(this.todo_data[i]['pk'] === item['pk']){
+        this.todo_data[i]['fields']['trash'] = true;
+      }
+    }
+    return this.todo_data, all_data;
   }
 
   delete_todo(all_data: any, index: number){
@@ -129,7 +135,6 @@ export class GetSetDataService {
 
   undo_todo(all_data: any, item: any, index: number){
     all_data.splice(index, 1);
-    this.todo_data.push(item);
     return all_data;
   }
 }

@@ -6,5 +6,8 @@
       <ion-title color="tertiary">
           {{title}}
       </ion-title>
+      <ion-buttons slot="end">
+        <ion-back-button *ngIf="isBack" defaultHref="tabs"></ion-back-button>
+      </ion-buttons>
   </ion-toolbar>
 </ion-header>
