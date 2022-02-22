@@ -123,16 +123,16 @@ export class Tab1Page {
     return await modal.present()
   }
 
-  async delete(item: number, index: number) {
+  async trash(item: number, index: number) {
     const session_data = await this.storageService.getData();
 
     let data_ ={
       'id_':      item['pk']
     }
 
-    this.getSetDataService.delete_todo(this.todoList, index);
+    this.getSetDataService.trash_todo(this.todoList, index);
 
-    this.authenticationService.delete_todo(data_, session_data.sessionid).subscribe((resp: any) => {
+    this.authenticationService.trash_todo(data_, session_data.sessionid).subscribe((resp: any) => {
       if(resp["success"]){
         this.ionicToastService.showToast(resp["msg"], 'success');
         // this.get_all_todos();
@@ -156,7 +156,7 @@ export class Tab1Page {
         {
           text: 'Delete',
           handler: () => {
-            this.delete(item, index);
+            this.trash(item, index);
           }
         }
       ]

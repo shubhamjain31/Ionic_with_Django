@@ -99,6 +99,15 @@ export class AuthenticationService {
     return this.http.post(this.APIUrl + '/delete/todo/', data, httpOptions);
   }
 
+  public trash_todo(data: any, sessionid: string){
+ 
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.post(this.APIUrl + '/trash/todo/', data, httpOptions);
+  }
+
   public bookmark_todo(data: any, sessionid: string){
  
     let httpOptions = {
@@ -123,6 +132,15 @@ export class AuthenticationService {
       withCredentials: true
     };
     return this.http.get(this.APIUrl + '/profile/', httpOptions);
+  }
+
+  public undo_todo(data: any, sessionid: string){
+ 
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.post(this.APIUrl + '/undo/todo/', data, httpOptions);
   }
 
   public logout(): Promise<void> {

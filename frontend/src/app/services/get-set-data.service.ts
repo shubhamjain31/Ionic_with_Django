@@ -54,6 +54,11 @@ export class GetSetDataService {
     }
   }
 
+  trash_todo(all_data: any, index: number){
+    all_data.splice(index, 1);
+    return all_data;
+  }
+
   delete_todo(all_data: any, index: number){
     all_data.splice(index, 1);
     return all_data;
@@ -120,5 +125,11 @@ export class GetSetDataService {
       }
     }
     return all_todos;
+  }
+
+  undo_todo(all_data: any, item: any, index: number){
+    all_data.splice(index, 1);
+    this.todo_data.push(item);
+    return all_data;
   }
 }

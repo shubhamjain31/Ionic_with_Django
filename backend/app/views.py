@@ -134,9 +134,27 @@ def delete_todo(request):
         except:
             return JsonResponse({"error":True, "msg":'Invalid Data Found'})
 
+        todo_obj.delete()
+
+        msg = "Todo Deleted Permanently!"
+        return JsonResponse({"success":True, "msg":msg})
+    return JsonResponse({})
+
+@csrf_exempt
+def trash_todo(request):
+    if request.method == "POST":
+        data            = urlencode(json.loads(request.body))
+        request.POST    = QueryDict(data)
+
+        id_           = request.POST.get('id_')
+
+        try:
+            todo_obj = Todos.objects.get(pk=id_)
+        except:
+            return JsonResponse({"error":True, "msg":'Invalid Data Found'})
+
         todo_obj.trash = True
         todo_obj.save()
-        # todo_obj.delete()
 
         msg = "Todo Deleted!"
         return JsonResponse({"success":True, "msg":msg})
@@ -160,6 +178,26 @@ def bookmark_todo(request):
         todo_obj.save()
 
         msg = "Todo Bookmarked!"
+        return JsonResponse({"success":True, "msg":msg})
+    return JsonResponse({})
+
+@csrf_exempt
+def undo_todo(request):
+    if request.method == "POST":
+        data            = urlencode(json.loads(request.body))
+        request.POST    = QueryDict(data)
+
+        id_           = request.POST.get('id_')
+
+        try:
+            todo_obj = Todos.objects.get(pk=id_)
+        except:
+            return JsonResponse({"error":True, "msg":'Invalid Data Found'})
+
+        # todo_obj.trash = False
+        # todo_obj.save()
+
+        msg = ""
         return JsonResponse({"success":True, "msg":msg})
     return JsonResponse({})
 

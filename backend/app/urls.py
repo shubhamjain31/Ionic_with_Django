@@ -10,4 +10,6 @@ urlpatterns = [
     path('bookmark/todo/' , bookmark_todo , name="bookmark_todo"),
 
     path('todo/status/' , todo_status , name="todo_status"),
+    path('trash/todo/' , trash_todo , name="trash_todo"),
+    path('undo/todo/' , undo_todo , name="undo_todo"),
 ]
