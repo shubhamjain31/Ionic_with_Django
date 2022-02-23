@@ -1,11 +1,11 @@
-<app-header title="Trash" isBack="true" class="text-center"></app-header>
+<app-header title="Archive" isBack="true" class="text-center"></app-header>
 
 <ion-content fullscreen="true" slot="fixed">
 
   <div *ngIf="todoList.length === 0">
-    <p class="no-data">No todo in trash</p>
+    <p class="no-data">No archive todo</p>
   </div>
-
+  
   <ion-card *ngFor="let item of todoList; let i = index" class="ion-margin">
     <ion-card-content>
 
@@ -21,16 +21,15 @@
     
       <ion-item button (click)="presentConfirm(item, i)">
         <ion-icon name="trash-outline" color="danger"></ion-icon>
-        <p class="custom-margin">Delete Forever</p>
+        <p class="custom-margin">Delete</p>
       </ion-item>
 
-      <ion-item button (click)="undo(item, i)">
-        <ion-icon name="arrow-undo-outline" color="primary"></ion-icon>
-        <p class="custom-margin">Undo</p>
+      <ion-item button (click)="unarchive(item, i)">
+        <ion-icon name="star" color="warning"></ion-icon>
+        <p class="custom-margin">Unarchive</p>
       </ion-item>
     </ion-row>
 
   </ion-card>
-
 
 </ion-content>

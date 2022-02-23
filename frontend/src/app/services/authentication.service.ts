@@ -143,6 +143,15 @@ export class AuthenticationService {
     return this.http.post(this.APIUrl + '/undo/todo/', data, httpOptions);
   }
 
+  public unarchive_todo(data: any, sessionid: string){
+ 
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.post(this.APIUrl + '/unarchive/todo/', data, httpOptions);
+  }
+
   public logout(): Promise<void> {
     this.authState.next(false);
     return this.storageService.removeData({});

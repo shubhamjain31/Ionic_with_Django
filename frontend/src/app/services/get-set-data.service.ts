@@ -107,7 +107,7 @@ export class GetSetDataService {
     let all_todos: any = [];
 
     for(let i=0; i<this.todo_data.length; i++){
-      if(this.todo_data[i]['fields']['done'] === true){
+      if(this.todo_data[i]['fields']['done'] === true && this.todo_data[i]['fields']['trash'] === false){
         all_todos.push(this.todo_data[i]);
       }
     }
@@ -134,6 +134,22 @@ export class GetSetDataService {
   }
 
   undo_todo(all_data: any, item: any, index: number){
+    all_data.splice(index, 1);
+    return all_data;
+  }
+
+  archieve_todos(){
+    let all_todos: any = [];
+
+    for(let i=0; i<this.todo_data.length; i++){
+      if(this.todo_data[i]['fields']['bookmark'] === true && this.todo_data[i]['fields']['trash'] === false){
+        all_todos.push(this.todo_data[i]);
+      }
+    }
+    return all_todos;
+  }
+
+  unarchive_todo(all_data: any, item: any, index: number){
     all_data.splice(index, 1);
     return all_data;
   }

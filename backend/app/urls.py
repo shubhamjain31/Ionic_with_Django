@@ -12,4 +12,5 @@ urlpatterns = [
     path('todo/status/' , todo_status , name="todo_status"),
     path('trash/todo/' , trash_todo , name="trash_todo"),
     path('undo/todo/' , undo_todo , name="undo_todo"),
+    path('unarchive/todo/' , unarchive_todo , name="unarchive_todo"),
 ]

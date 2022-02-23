@@ -31,7 +31,7 @@ export class AppComponent {
     },
     {
       title: 'Archive',
-      url: '/starred',
+      url: '/archive',
       icon: 'star'
     },
     {

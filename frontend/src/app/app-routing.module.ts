@@ -31,6 +31,10 @@ const routes: Routes = [
     path: 'trash',
     loadChildren: () => import('./views/trash/trash.module').then( m => m.TrashPageModule)
   },
+  {
+    path: 'archive',
+    loadChildren: () => import('./views/archive/archive.module').then( m => m.ArchivePageModule)
+  },
   { 
     path: '**', 
     redirectTo: '/login',

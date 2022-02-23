@@ -7,13 +7,13 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { AlertController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-trash',
-  templateUrl: './trash.page.html',
-  styleUrls: ['./trash.page.scss'],
+  selector: 'app-archive',
+  templateUrl: './archive.page.html',
+  styleUrls: ['./archive.page.scss'],
 })
-export class TrashPage implements OnInit {
+export class ArchivePage implements OnInit {
   todoList: any = [];
-  
+
   constructor(public getSetDataService: GetSetDataService, private alertCtrl: AlertController, private ionicToastService: IonicToastService,
     private storageService:StorageService, public authenticationService: AuthenticationService) { }
 
@@ -21,11 +21,7 @@ export class TrashPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.todoList = this.getSetDataService.trash_todos();
-   }
-
-   enable_options(){
-     console.log('djshs')
+    this.todoList = this.getSetDataService.archieve_todos();
    }
 
    async delete(item: any, i: number){
@@ -35,9 +31,9 @@ export class TrashPage implements OnInit {
       'id_':      item['pk']
     }
 
-    this.getSetDataService.delete_todo(this.todoList, i);
+    this.getSetDataService.trash_todo(this.todoList, item, i);
 
-    this.authenticationService.delete_todo(data_, session_data.sessionid).subscribe((resp: any) => {
+    this.authenticationService.trash_todo(data_, session_data.sessionid).subscribe((resp: any) => {
       if(resp["success"]){
         this.ionicToastService.showToast(resp["msg"], 'success');
       }
@@ -47,27 +43,10 @@ export class TrashPage implements OnInit {
     })
    }
 
-   async undo(item: any, i: number){
-    const session_data = await this.storageService.getData();
-
-    let data_ ={
-      'id_':      item['pk']
-    }
-
-    this.getSetDataService.undo_todo(this.todoList, item, i);
-
-    this.authenticationService.undo_todo(data_, session_data.sessionid).subscribe((resp: any) => {
-      if(resp["success"]){}
-      if(resp["error"]){
-        this.ionicToastService.showToast(resp["msg"], 'danger');
-      }
-    })
-   }
-
    async presentConfirm(item: number, index: number) {
     let alert: any = await this.alertCtrl.create({
       subHeader: 'Confirm Delete',
-      message: 'Do you want to permanently delete this todo?',
+      message: 'Do you want to delete this todo?',
       buttons: [
         {
           text: 'Cancel',
@@ -84,5 +63,24 @@ export class TrashPage implements OnInit {
     });
     await alert.present();
   }
+
+  async unarchive(item: any, i: number){
+    const session_data = await this.storageService.getData();
+
+    let data_ ={
+      'id_':      item['pk']
+    }
+
+    this.getSetDataService.unarchive_todo(this.todoList, item, i);
+
+    this.authenticationService.unarchive_todo(data_, session_data.sessionid).subscribe((resp: any) => {
+      if(resp["success"]){
+        this.ionicToastService.showToast(resp["msg"], 'success');
+      }
+      if(resp["error"]){
+        this.ionicToastService.showToast(resp["msg"], 'danger');
+      }
+    })
+   }
 
 }

@@ -201,6 +201,26 @@ def undo_todo(request):
         return JsonResponse({"success":True, "msg":msg})
     return JsonResponse({})
 
+@csrf_exempt
+def unarchive_todo(request):
+    if request.method == "POST":
+        data            = urlencode(json.loads(request.body))
+        request.POST    = QueryDict(data)
+
+        id_           = request.POST.get('id_')
+
+        try:
+            todo_obj = Todos.objects.get(pk=id_)
+        except:
+            return JsonResponse({"error":True, "msg":'Invalid Data Found'})
+
+        todo_obj.bookmark = False
+        todo_obj.save()
+
+        msg = "Todo Unarchive!"
+        return JsonResponse({"success":True, "msg":msg})
+    return JsonResponse({})
+
 def str_to_bool(status):
     if status == 'True':
         return True
