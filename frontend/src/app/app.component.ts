@@ -16,7 +16,7 @@ export class AppComponent {
   pages = [
     {
       title: 'Todays',
-      url: '/calendar',
+      url: '/todays',
       icon: 'calendar'
     },
     {

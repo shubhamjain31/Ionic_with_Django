@@ -35,6 +35,10 @@ const routes: Routes = [
     path: 'archive',
     loadChildren: () => import('./views/archive/archive.module').then( m => m.ArchivePageModule)
   },
+  {
+    path: 'todays',
+    loadChildren: () => import('./views/todays/todays.module').then( m => m.TodaysPageModule)
+  },
   { 
     path: '**', 
     redirectTo: '/login',

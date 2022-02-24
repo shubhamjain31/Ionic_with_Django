@@ -1,0 +1,36 @@
+<app-header title="Today" isBack="true" class="text-center"></app-header>
+
+<ion-content fullscreen="true" slot="fixed">
+
+  <div *ngIf="todoList.length === 0">
+    <p class="no-data">No todo</p>
+  </div>
+
+  <ion-card *ngFor="let item of todoList; let i = index" class="ion-margin">
+    <ion-card-content>
+
+      <ion-item>
+        <ion-icon *ngIf="item.fields.priority === 'high'" color="danger" size="small" name="ellipse"></ion-icon>
+        <ion-icon *ngIf="item.fields.priority === 'low'" color="success" size="small" name="ellipse"></ion-icon>
+        <ion-icon *ngIf="item.fields.priority === 'middle'" color="warning" size="small" name="ellipse"></ion-icon>
+        <ion-label [style.text-decoration]="item.fields.done ? 'line-through' : 'none'"> &nbsp;{{ item.fields.name}}</ion-label>
+      </ion-item>
+    </ion-card-content>
+
+    <ion-row>
+    
+      <ion-item button (click)="open(item, i)">
+        <ion-icon name="open-outline" color="medium"></ion-icon>
+        <p class="custom-margin">Open</p>
+      </ion-item>
+
+      <ion-item button (click)="undo(item, i)">
+        <ion-icon name="star-outline" color="primary"></ion-icon>
+        <p class="custom-margin">Bookmark</p>
+      </ion-item>
+    </ion-row>
+
+  </ion-card>
+
+
+</ion-content>

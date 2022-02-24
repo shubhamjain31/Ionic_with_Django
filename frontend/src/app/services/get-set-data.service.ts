@@ -153,4 +153,20 @@ export class GetSetDataService {
     all_data.splice(index, 1);
     return all_data;
   }
+
+  todays_todo(){
+    let all_todos: any = [];
+    let today = new Date();
+    let g1 = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    for(let i=0; i<this.todo_data.length; i++){
+      let todo_date = new Date(this.todo_data[i]['fields']['date_created']);
+      let g2 = new Date(todo_date.getFullYear(), todo_date.getMonth(), todo_date.getDate());
+      
+      if(String(g2) === String(g1)){
+        all_todos.push(this.todo_data[i]);
+      }
+    }
+    return all_todos;
+  }
 }

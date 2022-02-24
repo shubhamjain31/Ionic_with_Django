@@ -1,0 +1,25 @@
+.no-data{
+    display: flex; 
+    justify-content: center; 
+    align-items: center ;
+    font-size: 40px;
+    color: darkolivegreen;
+  }
+
+  .hr {
+    border-bottom: 1px solid #ccc;
+    margin: 10px 0;
+    width: 100%;
+  }
+
+  ion-content{
+    --background : #F0F4FD;
+  
+    p{
+     font-weight: 300;
+    }
+  }
+
+ion-icon {
+  font-size: 20px; //Preferred size here
+}
