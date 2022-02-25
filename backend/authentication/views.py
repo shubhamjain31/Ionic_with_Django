@@ -49,3 +49,9 @@ def user_profile(request):
     }
 
     return JsonResponse({'success':True, 'user_data':user_data})
+
+@csrf_exempt
+def user_settings(request):
+    user_data = {}
+    user_data['theme_mode'] = request.user.theme_mode
+    return JsonResponse({'success':True, 'user_data':user_data})

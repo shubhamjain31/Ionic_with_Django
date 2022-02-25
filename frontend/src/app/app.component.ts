@@ -75,9 +75,18 @@ export class AppComponent {
         }
       });
     });
+
+    this.checkDarkTheme();
   }
 
   async dismis(){
     await this.menuCtlr.close()
+  }
+
+  checkDarkTheme() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    if ( prefersDark.matches ) {
+      document.body.classList.toggle( 'dark' );
+    }
   }
 }

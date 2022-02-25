@@ -39,6 +39,10 @@ const routes: Routes = [
     path: 'todays',
     loadChildren: () => import('./views/todays/todays.module').then( m => m.TodaysPageModule)
   },
+  {
+    path: 'settings',
+    loadChildren: () => import('./views/settings/settings.module').then( m => m.SettingsPageModule)
+  },
   { 
     path: '**', 
     redirectTo: '/login',
