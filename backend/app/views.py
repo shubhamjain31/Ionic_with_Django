@@ -177,7 +177,11 @@ def bookmark_todo(request):
         todo_obj.bookmark = str_to_bool(status)
         todo_obj.save()
 
-        msg = "Todo Bookmarked!"
+
+        if todo_obj.bookmark == True:
+            msg = "Todo Bookmarked!"
+        else:
+            msg = "Remove Bookmarked!"
         return JsonResponse({"success":True, "msg":msg})
     return JsonResponse({})
 

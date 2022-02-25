@@ -24,8 +24,8 @@
         <p class="custom-margin">Open</p>
       </ion-item>
 
-      <ion-item button (click)="undo(item, i)">
-        <ion-icon name="star-outline" color="primary"></ion-icon>
+      <ion-item button (click)="undo(item.fields.bookmark, item)">
+        <ion-icon name="star" [color]="item.fields.bookmark ? 'danger' : 'dark'"></ion-icon>
         <p class="custom-margin">Bookmark</p>
       </ion-item>
     </ion-row>
