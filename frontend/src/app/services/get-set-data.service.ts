@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class GetSetDataService {
   todo_data: any = [];
   session_data: any = {};
+  theme_mode: boolean;
 
   constructor() { }
 
@@ -168,5 +169,14 @@ export class GetSetDataService {
       }
     }
     return all_todos;
+  }
+
+  set_theme_mode(status: boolean){
+    this.theme_mode = status;
+    return this.theme_mode;
+  }
+
+  get_theme_mode(){
+    return this.theme_mode;
   }
 }

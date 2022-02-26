@@ -18,7 +18,7 @@ def all_todos(request):
     todos = Todos.objects.filter(user = request.user).order_by('-date_created')
 
     all_todos = json.loads(serialize("json", todos))
-    return JsonResponse({"success":True, 'all_todos': all_todos})
+    return JsonResponse({"success":True, 'all_todos': all_todos, 'theme_mode': {'mode_status': request.user.theme_mode}})
 
 @csrf_exempt
 def add_todo(request):

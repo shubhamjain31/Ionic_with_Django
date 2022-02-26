@@ -55,3 +55,14 @@ def user_settings(request):
     user_data = {}
     user_data['theme_mode'] = request.user.theme_mode
     return JsonResponse({'success':True, 'user_data':user_data})
+
+@csrf_exempt
+def change_theme_mode(request):
+    if request.method == "POST":
+        data = urlencode(json.loads(request.body))
+        user_data = QueryDict(data)
+
+        mode_status               = user_data.get('mode_status')
+        request.user.theme_mode = mode_status
+        request.user.save()
+    return JsonResponse({'success':True})

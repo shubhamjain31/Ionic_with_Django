@@ -161,6 +161,15 @@ export class AuthenticationService {
     return this.http.get(this.APIUrl + '/settings/', httpOptions);
   }
 
+  public mode_change(data: any, sessionid: string){
+ 
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.post(this.APIUrl + '/change/mode/', data, httpOptions);
+  }
+
 
   public logout(): Promise<void> {
     this.authState.next(false);
