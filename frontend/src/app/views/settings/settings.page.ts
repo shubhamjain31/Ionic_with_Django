@@ -18,37 +18,35 @@ export class SettingsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.darkMode = this.getSetDataService.get_theme_mode();
   }
 
   ionViewWillEnter() {
-    // this.darkMode = this.getSetDataService.get_theme_mode();
-    console.log(this.darkMode)
-    // this.settings();
+    this.darkMode = this.getSetDataService.get_theme_mode();
    }
 
-  async theme_mode() {
-    this.darkMode = !this.darkMode
-    console.log(this.darkMode)
-    document.body.classList.toggle( 'dark' );
-   
-    let session_data: any;
-    if(Object.keys(this.getSetDataService.get_session_data()).length != 0){
-      session_data = this.getSetDataService.get_session_data();
-    }
-    else{
-      session_data = await this.storageService.getData();
-    }
-
-    this.getSetDataService.set_theme_mode(this.darkMode);
-    this.authenticationService.mode_change({'mode_status': this.darkMode},session_data.sessionid)
-    .subscribe((resp: any) => {
-      if (resp["success"]){
-        
+  async theme_mode(event) {
+    if(event.target.checked != this.darkMode)
+    {
+      document.body.classList.toggle( 'dark' );
+    
+      let session_data: any;
+      if(Object.keys(this.getSetDataService.get_session_data()).length != 0){
+        session_data = this.getSetDataService.get_session_data();
       }
-    }, err => {
-      console.log(err);
-    });
+      else{
+        session_data = await this.storageService.getData();
+      }
+
+      this.getSetDataService.set_theme_mode(event.target.checked);
+      this.authenticationService.mode_change({'mode_status': !this.darkMode},session_data.sessionid)
+      .subscribe((resp: any) => {
+        if (resp["success"]){
+          
+        }
+      }, err => {
+        console.log(err);
+      });
+    }
     
   }
 

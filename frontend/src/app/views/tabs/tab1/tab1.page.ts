@@ -17,7 +17,7 @@ export class Tab1Page {
   todoList: any = []
   loader: boolean = false;
   is_data: boolean = false;
-  theme_mode: boolean;
+  theme_mode: boolean = false;
 
   today: number = Date.now();
   no_todo: string;
@@ -43,7 +43,10 @@ export class Tab1Page {
       if (resp["success"]){
         this.theme_mode = resp['theme_mode']['mode_status'];
 
-        if(this.theme_mode){
+        if(this.theme_mode == undefined){
+          document.body.classList.toggle( 'dark' );
+        }
+        else if(this.theme_mode != this.getSetDataService.get_theme_mode() && this.theme_mode){
           document.body.classList.toggle( 'dark' );
         }
 
@@ -63,18 +66,10 @@ export class Tab1Page {
   }
 
   ionViewWillEnter() {
-    this.theme_mode = this.getSetDataService.get_theme_mode();
-    console.log(this.theme_mode,'jj')
     if(this.is_data){
       this.loader = true;
       this.todoList = this.getSetDataService.get_todo_data()
       this.no_todo  = "No Todos";
-
-      if(this.theme_mode){
-      }
-      else{
-        document.body.classList.toggle( 'dark' );
-      }
       }
    }
 
