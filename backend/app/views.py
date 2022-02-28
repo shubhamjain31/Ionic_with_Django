@@ -15,10 +15,10 @@ from backend.decorators import *
 
 @csrf_exempt
 def all_todos(request):
-    todos = Todos.objects.filter(user = request.user).order_by('-date_created')
+    todos = Todos.objects.filter(user = request.user)
 
     all_todos = json.loads(serialize("json", todos))
-    return JsonResponse({"success":True, 'all_todos': all_todos, 'theme_mode': {'mode_status': request.user.theme_mode}})
+    return JsonResponse({"success":True, 'all_todos': all_todos, 'theme_mode': {'mode_status': request.user.theme_mode}, 'add_or_bottom': {'todo_add': request.user.add_or_bottom}})
 
 @csrf_exempt
 def add_todo(request):

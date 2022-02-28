@@ -12,11 +12,13 @@ import { GetSetDataService } from '../../../services/get-set-data.service';
 export class Tab3Page {
   user_data: any  = {};
   total_counts: any = {};
+  theme_mode: boolean = false;
 
   constructor(public authenticationService: AuthenticationService, private storageService:StorageService, public getSetDataService: GetSetDataService,
     private alertController: AlertController, private loadingController: LoadingController) {}
   
-    async ngOnInit() {
+  async ngOnInit() {
+    this.theme_mode =this.getSetDataService.get_theme_mode();
     this.profile();
     const loading = await this.loadingController.create();                // loader
     await loading.present();

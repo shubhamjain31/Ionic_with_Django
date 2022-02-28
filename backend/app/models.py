@@ -21,6 +21,7 @@ class User(AbstractUser):
     last_login              = models.DateTimeField(blank=True, null=True)
     last_logout             = models.DateTimeField(blank=True, null=True)
     theme_mode              = models.BooleanField(default=False)
+    add_or_bottom           = models.BooleanField(default=False)
     date_joined             = models.DateTimeField(auto_now_add=True, editable=False, blank=True)
     ip_address              = models.CharField(max_length=100, null=True, blank=True)
 

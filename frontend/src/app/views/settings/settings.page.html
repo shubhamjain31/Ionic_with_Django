@@ -12,13 +12,13 @@
       <ion-label>
         Add new items to bottom
       </ion-label>
-      <ion-toggle slot="end" name="add_new" color="success" checked></ion-toggle>
+      <ion-toggle slot="end" name="add_new" color="success" [ngModel]="top_bottom" (ionChange)="add_top_or_bottom($event)"></ion-toggle>
     </ion-item>
     <ion-item detail>
       <ion-label>
         Move ticked items to bottom
       </ion-label>
-      <ion-toggle slot="end" name="move_ticked" color="success" checked></ion-toggle>
+      <ion-toggle slot="end" name="move_ticked" color="success"></ion-toggle>
     </ion-item>
     <ion-item detail lines="none">
       <ion-label>

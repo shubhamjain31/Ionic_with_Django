@@ -170,6 +170,15 @@ export class AuthenticationService {
     return this.http.post(this.APIUrl + '/change/mode/', data, httpOptions);
   }
 
+  public todo_Add_top_or_bottom(data: any, sessionid: string){
+ 
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.post(this.APIUrl + '/top-or-bottom-todo/', data, httpOptions);
+  }
+
 
   public logout(): Promise<void> {
     this.authState.next(false);

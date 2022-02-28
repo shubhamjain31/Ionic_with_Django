@@ -18,6 +18,7 @@ export class Tab1Page {
   loader: boolean = false;
   is_data: boolean = false;
   theme_mode: boolean = false;
+  add_top_or_bottom: boolean = false;
 
   today: number = Date.now();
   no_todo: string;
@@ -41,7 +42,8 @@ export class Tab1Page {
     this.authenticationService.todos_list(session_data.sessionid)
     .subscribe((resp: any) => {
       if (resp["success"]){
-        this.theme_mode = resp['theme_mode']['mode_status'];
+        this.theme_mode         = resp['theme_mode']['mode_status'];
+        this.add_top_or_bottom  = resp['add_or_bottom']['todo_add'];
 
         if(this.theme_mode == undefined){
           document.body.classList.toggle( 'dark' );
@@ -51,6 +53,7 @@ export class Tab1Page {
         }
 
         this.getSetDataService.set_theme_mode(this.theme_mode);
+        this.getSetDataService.set_add_top_or_bottom(this.add_top_or_bottom);
         
         this.getSetDataService.set_todo_data(resp['all_todos']);
         setTimeout(() => {

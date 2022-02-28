@@ -7,6 +7,7 @@ export class GetSetDataService {
   todo_data: any = [];
   session_data: any = {};
   theme_mode: boolean;
+  torb: boolean;
 
   constructor() { }
 
@@ -33,6 +34,10 @@ export class GetSetDataService {
       if(this.todo_data[i]['fields']['trash'] != true){
         all_todos.push(this.todo_data[i]);
       }
+    }
+
+    if(!this.torb){
+      all_todos = all_todos.reverse();
     }
     return all_todos;
   }
@@ -178,5 +183,14 @@ export class GetSetDataService {
 
   get_theme_mode(){
     return this.theme_mode;
+  }
+
+  set_add_top_or_bottom(status: boolean){
+    this.torb = status;
+    return this.torb;
+  }
+
+  get_add_top_or_bottom(){
+    return this.torb;
   }
 }

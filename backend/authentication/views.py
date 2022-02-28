@@ -66,3 +66,14 @@ def change_theme_mode(request):
         request.user.theme_mode = mode_status
         request.user.save()
     return JsonResponse({'success':True})
+
+@csrf_exempt
+def add_or_bottom(request):
+    if request.method == "POST":
+        data = urlencode(json.loads(request.body))
+        user_data = QueryDict(data)
+
+        status               = user_data.get('addorbottom')
+        request.user.add_or_bottom = status
+        request.user.save()
+    return JsonResponse({'success':True})
