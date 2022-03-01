@@ -18,7 +18,7 @@
       <ion-label>
         Move ticked items to bottom
       </ion-label>
-      <ion-toggle slot="end" name="move_ticked" color="success"></ion-toggle>
+      <ion-toggle slot="end" name="move_ticked" color="success" [ngModel]="move_ticked" (ionChange)="move_ticked_item($event)"></ion-toggle>
     </ion-item>
     <ion-item detail lines="none">
       <ion-label>

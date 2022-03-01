@@ -8,6 +8,7 @@ export class GetSetDataService {
   session_data: any = {};
   theme_mode: boolean;
   torb: boolean;
+  moveticked: boolean;
 
   constructor() { }
 
@@ -192,5 +193,14 @@ export class GetSetDataService {
 
   get_add_top_or_bottom(){
     return this.torb;
+  }
+
+  set_move_ticked_item(status: boolean){
+    this.moveticked = status;
+    return this.moveticked;
+  }
+
+  get_move_ticked_item(){
+    return this.moveticked;
   }
 }

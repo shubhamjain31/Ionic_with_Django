@@ -18,7 +18,8 @@ def all_todos(request):
     todos = Todos.objects.filter(user = request.user)
 
     all_todos = json.loads(serialize("json", todos))
-    return JsonResponse({"success":True, 'all_todos': all_todos, 'theme_mode': {'mode_status': request.user.theme_mode}, 'add_or_bottom': {'todo_add': request.user.add_or_bottom}})
+    return JsonResponse({"success":True, 'all_todos': all_todos, 'theme_mode': {'mode_status': request.user.theme_mode}, 'add_or_bottom': {'todo_add': request.user.add_or_bottom},
+    'moved_ticked_item': {'todo_add': request.user.move_ticked_item}})
 
 @csrf_exempt
 def add_todo(request):

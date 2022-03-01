@@ -77,3 +77,14 @@ def add_or_bottom(request):
         request.user.add_or_bottom = status
         request.user.save()
     return JsonResponse({'success':True})
+
+@csrf_exempt
+def ticked_item_move(request):
+    if request.method == "POST":
+        data = urlencode(json.loads(request.body))
+        user_data = QueryDict(data)
+
+        status         = user_data.get('movetickeditem')
+        request.user.move_ticked_item = status
+        request.user.save()
+    return JsonResponse({'success':True})

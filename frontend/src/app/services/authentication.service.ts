@@ -179,6 +179,15 @@ export class AuthenticationService {
     return this.http.post(this.APIUrl + '/top-or-bottom-todo/', data, httpOptions);
   }
 
+  public todo_move_ticked_item(data: any, sessionid: string){
+ 
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.post(this.APIUrl + '/move-ticked-item/', data, httpOptions);
+  }
+
 
   public logout(): Promise<void> {
     this.authState.next(false);
