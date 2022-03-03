@@ -189,9 +189,14 @@ export class AuthenticationService {
   }
 
 
-  public logout(): Promise<void> {
+  public logout(sessionid: string) {
     this.authState.next(false);
-    return this.storageService.removeData({});
+    this.storageService.removeData({});
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.get(this.APIUrl + '/logout/', httpOptions);
   }
 
   public isAuthenticated() {

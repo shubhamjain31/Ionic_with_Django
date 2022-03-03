@@ -1,3 +1,4 @@
+from datetime import datetime
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import get_user_model, authenticate, login, logout
@@ -87,4 +88,10 @@ def ticked_item_move(request):
         status         = user_data.get('movetickeditem')
         request.user.move_ticked_item = status
         request.user.save()
+    return JsonResponse({'success':True})
+
+@csrf_exempt
+def custom_logout(request):
+    request.user.last_logout = datetime.now()
+    request.user.save()
     return JsonResponse({'success':True})
