@@ -30,10 +30,23 @@ export class GetSetDataService {
 
   all_todos(){
     let all_todos: any = [];
+    let ticked_todo = [];
+    let not_ticked_todo = [];
 
     for(let i=0; i<this.todo_data.length; i++){
       if(this.todo_data[i]['fields']['trash'] != true){
-        all_todos.push(this.todo_data[i]);
+        if(this.moveticked){
+          if(this.todo_data[i].fields.done === true){
+            ticked_todo.push(this.todo_data[i])
+          }
+          else{
+            not_ticked_todo.push(this.todo_data[i]);
+          }
+          all_todos = not_ticked_todo.concat(ticked_todo);
+        }
+        else{
+          all_todos.push(this.todo_data[i]);
+        }
       }
     }
 

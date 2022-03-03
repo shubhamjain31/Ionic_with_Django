@@ -19,6 +19,7 @@ export class SettingsPage implements OnInit {
     this.darkMode = prefersDark.matches;
     this.top_bottom     = this.getSetDataService.get_add_top_or_bottom();
     this.darkMode       = this.getSetDataService.get_theme_mode();
+    this.move_ticked    = this.getSetDataService.get_move_ticked_item();
   }
 
   ngOnInit() {
