@@ -47,6 +47,10 @@ const routes: Routes = [
     path: '**', 
     redirectTo: '/login',
   },
+  {
+    path: 'reminder',
+    loadChildren: () => import('./views/reminder/reminder.module').then( m => m.ReminderPageModule)
+  },
 ];
 @NgModule({
   imports: [
