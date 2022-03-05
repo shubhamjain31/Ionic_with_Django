@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ReminderPageRoutingModule } from './reminder-routing.module';
 
 import { ReminderPage } from './reminder.page';
+import { HeaderComponent } from 'src/app/components/header/header.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ReminderPage } from './reminder.page';
     IonicModule,
     ReminderPageRoutingModule
   ],
-  declarations: [ReminderPage]
+  declarations: [ReminderPage, HeaderComponent]
 })
 export class ReminderPageModule {}

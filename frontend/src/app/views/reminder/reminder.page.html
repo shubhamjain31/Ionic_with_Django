@@ -1,9 +1,47 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>reminder</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-header title="Reminders" isBack="true" class="text-center"></app-header>
 
-<ion-content>
+<ion-content [fullscreen]="true">
 
+
+  <div *ngIf="todoList.length === 0">
+    <p class="no-data">{{no_todo}}</p>
+  </div>
+  
+  <ion-card *ngFor="let item of todoList; let i = index" class="ion-margin">
+    <ion-card-header>
+      
+      <ion-card-subtitle>
+        {{item}}
+      </ion-card-subtitle>
+
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-label><ion-icon name="alarm-outline"></ion-icon> {{item | date:'fullDate'}}</ion-label>
+    </ion-card-content>
+
+    <ion-row>
+    
+      <ion-item button (click)="update(item)">
+        <ion-icon name="create-outline"></ion-icon>
+        <p class="custom-margin">Update</p>
+      </ion-item>
+
+      <ion-item button (click)="presentConfirm(item, i)">
+        <ion-icon name="trash-outline"></ion-icon>
+        <p class="custom-margin">Cancel</p>
+      </ion-item>
+
+      <ion-item button (click)="starred(item, item)">
+        <ion-icon name="star" [color]="item ? 'danger' : 'dark'"></ion-icon>
+        <p class="custom-margin">Bookmark</p>
+      </ion-item>
+    </ion-row>
+
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" *ngIf="loader">
+    <ion-fab-button color="secondary" (click)="addNewItem()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 </ion-content>

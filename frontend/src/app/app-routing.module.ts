@@ -43,13 +43,13 @@ const routes: Routes = [
     path: 'settings',
     loadChildren: () => import('./views/settings/settings.module').then( m => m.SettingsPageModule)
   },
-  { 
-    path: '**', 
-    redirectTo: '/login',
-  },
   {
     path: 'reminder',
     loadChildren: () => import('./views/reminder/reminder.module').then( m => m.ReminderPageModule)
+  },
+  { 
+    path: '**', 
+    redirectTo: '/login',
   },
 ];
 @NgModule({
