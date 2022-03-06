@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AddReminderPage } from '../add-reminder/add-reminder.page';
+import { ModalController, AlertController } from '@ionic/angular';
+import { IonicToastService } from '../../services/ionic-toast.service';
+
 
 @Component({
   selector: 'app-reminder',
@@ -8,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 export class ReminderPage implements OnInit {
   todoList: any = [1];
 
-  constructor() { }
+  constructor(public modalCtlr: ModalController, private ionicToastService: IonicToastService) { }
 
   ngOnInit() {
   }
@@ -24,5 +28,16 @@ export class ReminderPage implements OnInit {
   starred(item: any, item1: any){
 
   }
+
+  async addNewReminder(){
+    const modal = await this.modalCtlr.create({
+      component: AddReminderPage,
+    })
+    modal.onDidDismiss().then(newTask =>{
+      this.todoList   = [];
+    })
+    return await modal.present()
+  }
+
 
 }
