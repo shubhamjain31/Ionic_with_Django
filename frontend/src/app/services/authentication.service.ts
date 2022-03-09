@@ -208,6 +208,15 @@ export class AuthenticationService {
     return this.http.post(this.APIUrl + '/add-reminder/', data, httpOptions);
   }
 
+  public all_reminders(sessionid: string){
+ 
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.get(this.APIUrl + '/reminder-list/', httpOptions);
+  }
+
   public isAuthenticated() {
     return this.authState.value;
   }

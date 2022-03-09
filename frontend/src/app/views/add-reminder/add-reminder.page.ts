@@ -31,7 +31,7 @@ export class AddReminderPage implements OnInit {
                           itemDate:         this.itemDate, 
                           itemTime:         this.itemTime
                     }
-    let uid = this.itemTitle + this.itemDate
+    let uid = this.itemTitle + this.itemDate;
     
     if(uid){
       this.authenticationService.add_reminder(this.newReminderObj, session_data['sessionid']).subscribe((data: any)=>{

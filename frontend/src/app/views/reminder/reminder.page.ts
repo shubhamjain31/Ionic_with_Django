@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AddReminderPage } from '../add-reminder/add-reminder.page';
 import { ModalController, AlertController } from '@ionic/angular';
 import { IonicToastService } from '../../services/ionic-toast.service';
+import { AuthenticationService } from 'src/app/services/authentication.service';
+import { StorageService } from 'src/app/services/storage.service';
 
 
 @Component({
@@ -10,11 +12,22 @@ import { IonicToastService } from '../../services/ionic-toast.service';
   styleUrls: ['./reminder.page.scss'],
 })
 export class ReminderPage implements OnInit {
-  todoList: any = [1];
+  all_reminders: any = [];
 
-  constructor(public modalCtlr: ModalController, private ionicToastService: IonicToastService) { }
+  constructor(public modalCtlr: ModalController, private ionicToastService: IonicToastService, private authenticationService: AuthenticationService,
+    private storageService:StorageService) { }
 
   ngOnInit() {
+    this.reminders_list();
+  }
+
+  async reminders_list(){
+    const session_data = await this.storageService.getData();
+    this.authenticationService.all_reminders(session_data['sessionid']).subscribe((data: any)=>{
+      if(data['success']){
+        this.all_reminders = data['all_reminders'];
+      }
+    });
   }
 
   update(item: any){
@@ -34,7 +47,9 @@ export class ReminderPage implements OnInit {
       component: AddReminderPage,
     })
     modal.onDidDismiss().then(newTask =>{
-      this.todoList   = [];
+      if(Object.keys(newTask['data']).length != 0){
+        this.reminders_list();
+      }
     })
     return await modal.present()
   }

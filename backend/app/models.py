@@ -50,3 +50,16 @@ class Todos(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Reminder(models.Model):
+    user                    = models.ForeignKey(User, on_delete=models.CASCADE)
+    title                   = models.CharField(max_length=200, blank=True, null=True)
+    note                    = models.TextField()
+    rem_date                = models.DateField(blank=True, null=True)
+    rem_time                = models.TimeField(blank=True, null=True)
+    date_created            = models.DateTimeField(auto_now_add=True, editable=False, blank=True)
+    ip_address              = models.CharField(max_length=100, null=True, blank=True) 
+
+    def __str__(self):
+        return self.title

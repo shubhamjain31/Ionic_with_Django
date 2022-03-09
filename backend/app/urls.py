@@ -13,4 +13,6 @@ urlpatterns = [
     path('trash/todo/' , trash_todo , name="trash_todo"),
     path('undo/todo/' , undo_todo , name="undo_todo"),
     path('unarchive/todo/' , unarchive_todo , name="unarchive_todo"),
+    path('add-reminder/' , add_reminder , name="add_reminder"),
+    path('reminder-list/' , all_reminder , name="all_reminder"),
 ]

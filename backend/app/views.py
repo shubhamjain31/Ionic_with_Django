@@ -1,3 +1,4 @@
+from datetime import date, datetime
 from django.http import JsonResponse
 from urllib.parse import urlencode
 from django.http import QueryDict
@@ -224,6 +225,34 @@ def unarchive_todo(request):
 
         msg = "Todo Unarchive!"
         return JsonResponse({"success":True, "msg":msg})
+    return JsonResponse({})
+
+@csrf_exempt
+def all_reminder(request):
+    reminder_list = Reminder.objects.filter(user=request.user)
+
+    reminder_list = json.loads(serialize("json", reminder_list))
+    return JsonResponse({'success': True, 'all_reminders':reminder_list})
+
+@csrf_exempt
+def add_reminder(request):
+    if request.method == "POST":
+        data            = urlencode(json.loads(request.body))
+        request.POST    = QueryDict(data)
+
+        title           = request.POST.get('itemTitle')
+        note            = request.POST.get('itemNote')
+        date_           = request.POST.get('itemDate')
+        time_           = request.POST.get('itemTime')
+
+        date_ = datetime.strptime(date_, '%Y-%m-%dT%H:%M:%S.%f%z').strftime('%Y-%m-%d')
+        time_ = datetime.strptime(time_, '%Y-%m-%dT%H:%M:%S.%f%z').strftime('%H:%M:%S')
+
+        rem_date = datetime.strptime(date_, '%Y-%m-%d')
+        rem_time = datetime.strptime(time_, '%H:%M:%S')
+
+        Reminder.objects.create(user=request.user, title=title, note=note, rem_date=rem_date, rem_time=rem_time)
+        
     return JsonResponse({})
 
 def str_to_bool(status):
