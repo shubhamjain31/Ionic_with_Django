@@ -4,6 +4,7 @@ import { ModalController, AlertController } from '@ionic/angular';
 import { IonicToastService } from '../../services/ionic-toast.service';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { UpdateReminderPage } from '../update-reminder/update-reminder.page';
 
 
 @Component({
@@ -30,8 +31,17 @@ export class ReminderPage implements OnInit {
     });
   }
 
-  update(item: any){
+  async update(item: any){
+    const modal = await this.modalCtlr.create({
+      component: UpdateReminderPage,
+      componentProps: {task: item}
+    })
 
+    modal.onDidDismiss().then(()=>{
+      // this.get_all_todos();
+    })
+    
+    return await modal.present()
   }
 
   presentConfirm(item: any, i: number){

@@ -1,0 +1,35 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar >
+    <ion-title>Edit Reminder</ion-title>
+    <ion-icon name="close" slot="end" size="larger" class="ion-padding" (click)="dismis()"></ion-icon>
+  </ion-toolbar>
+
+</ion-header>
+
+<ion-content >
+  <ion-card class="ion-align-self-center" >
+    <ion-item>
+      <ion-textarea [(ngModel)]="itemTitle"  placeholder="Title"></ion-textarea>
+   </ion-item>
+
+    <ion-item>
+      <ion-textarea [(ngModel)]="itemNote"  placeholder="Note"></ion-textarea>
+   </ion-item>
+  
+   <ion-item>
+     <ion-icon name="alarm-outline"slot="start"></ion-icon>
+     <ion-label >Date </ion-label>
+     <ion-datetime [(ngModel)]="itemDate"  displayFormat="D MMM YYYY H:mm"></ion-datetime>
+   </ion-item>
+
+   <ion-item>
+    <ion-icon name="timer-outline"slot="start"></ion-icon>
+    <ion-label >Time </ion-label>
+    <ion-datetime [(ngModel)]="itemTime"  displayFormat="h:mm A"></ion-datetime>
+  </ion-item>
+
+   <ion-button class="ion-margin" expand="block" (click)="update()">Add Reminder</ion-button>
+
+  </ion-card>
+
+</ion-content>

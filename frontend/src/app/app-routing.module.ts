@@ -51,6 +51,10 @@ const routes: Routes = [
     path: 'add-reminder',
     loadChildren: () => import('./views/add-reminder/add-reminder.module').then( m => m.AddReminderPageModule)
   },
+  {
+    path: 'update-reminder',
+    loadChildren: () => import('./views/update-reminder/update-reminder.module').then( m => m.UpdateReminderPageModule)
+  },
   { 
     path: '**', 
     redirectTo: '/login',
