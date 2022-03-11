@@ -217,6 +217,24 @@ export class AuthenticationService {
     return this.http.get(this.APIUrl + '/reminder-list/', httpOptions);
   }
 
+  public update_reminder(data: any, sessionid: string){
+ 
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.post(this.APIUrl + '/update-reminder/', data, httpOptions);
+  }
+
+  public delete_reminder(data: any, sessionid: string){
+ 
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.post(this.APIUrl + '/delete-reminder/', data, httpOptions);
+  }
+
   public isAuthenticated() {
     return this.authState.value;
   }

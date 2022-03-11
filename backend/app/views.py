@@ -253,6 +253,53 @@ def add_reminder(request):
 
         Reminder.objects.create(user=request.user, title=title, note=note, rem_date=rem_date, rem_time=rem_time)
         
+    return JsonResponse({"success":True, "msg":'Reminder Added!'})
+
+@csrf_exempt
+def update_reminder(request):
+    if request.method == "POST":
+        data            = urlencode(json.loads(request.body))
+        request.POST    = QueryDict(data)
+
+        title           = request.POST.get('itemTitle')
+        note            = request.POST.get('itemNote')
+        date_           = request.POST.get('itemDate')
+        time_           = request.POST.get('itemTime')
+        id_             = request.POST.get('id_')
+
+        try:
+            reminder_obj = Reminder.objects.get(pk=id_)
+        except:
+            return JsonResponse({"error":True, "msg":'Invalid Data Found'})
+
+        rem_date = datetime.strptime(date_, '%Y-%m-%d')
+        rem_time = datetime.strptime(time_, '%H:%M:%S')
+
+        reminder_obj.title      = title
+        reminder_obj.note       = note
+        reminder_obj.rem_date   = rem_date
+        reminder_obj.rem_time   = rem_time
+        reminder_obj.save()
+        
+    return JsonResponse({"success":True, "msg":'Reminder Updated!'})
+
+@csrf_exempt
+def delete_reminder(request):
+    if request.method == "POST":
+        data            = urlencode(json.loads(request.body))
+        request.POST    = QueryDict(data)
+
+        id_           = request.POST.get('id_')
+
+        try:
+            reminder_obj = Reminder.objects.get(pk=id_)
+        except:
+            return JsonResponse({"error":True, "msg":'Invalid Data Found'})
+
+        reminder_obj.delete()
+
+        msg = "Reminder Deleted!"
+        return JsonResponse({"success":True, "msg":msg})
     return JsonResponse({})
 
 def str_to_bool(status):

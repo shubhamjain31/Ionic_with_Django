@@ -1,5 +1,8 @@
 import { Component, OnInit,Input } from '@angular/core';
 import { ModalController, AlertController } from '@ionic/angular';
+import { AuthenticationService } from '../../services/authentication.service';
+import { StorageService } from '../../services/storage.service';
+import { IonicToastService } from '../../services/ionic-toast.service';
 
 @Component({
   selector: 'app-update-reminder',
@@ -16,7 +19,8 @@ export class UpdateReminderPage implements OnInit {
   itemDate: any;
   itemTime: any;
 
-  constructor(public modalCtlr:ModalController) {}
+  constructor(public modalCtlr:ModalController, private authenticationService: AuthenticationService, private storageService:StorageService,
+    private ionicToastService: IonicToastService) {}
 
   ngOnInit() {
     this.itemTitle =       this.task.fields.title,
@@ -29,13 +33,26 @@ export class UpdateReminderPage implements OnInit {
     await this.modalCtlr.dismiss()
   }
 
-  update(){
+  async update(){
+    const session_data = await this.storageService.getData();
     this.newReminderObj = {itemTitle:      this.itemTitle, 
       itemNote:    this.itemNote, 
       itemDate:   this.itemDate,
       itemTime:   this.itemTime,
       id_:            this.task.pk
     }
+
+    this.authenticationService.update_reminder(this.newReminderObj, session_data['sessionid']).subscribe((data: any)=>{
+      if (data["success"]){
+        this.ionicToastService.showToast(data["msg"], 'success');
+      }
+
+      if (data["error"]){
+        this.ionicToastService.showToast(data["msg"], 'danger');
+      }
+
+      this.dismis();
+    })
   }
 
 }

@@ -14,5 +14,7 @@ urlpatterns = [
     path('undo/todo/' , undo_todo , name="undo_todo"),
     path('unarchive/todo/' , unarchive_todo , name="unarchive_todo"),
     path('add-reminder/' , add_reminder , name="add_reminder"),
+    path('update-reminder/' , update_reminder , name="update_reminder"),
+    path('delete-reminder/' , delete_reminder , name="delete_reminder"),
     path('reminder-list/' , all_reminder , name="all_reminder"),
 ]
