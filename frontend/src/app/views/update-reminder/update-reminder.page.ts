@@ -34,6 +34,30 @@ export class UpdateReminderPage implements OnInit {
   }
 
   async update(){
+    if(this.itemTitle === undefined){
+      return;
+    }
+
+    if(this.itemNote === undefined){
+      return;
+    }
+
+    if(this.itemTitle.trim() === ''){
+      return;
+    }
+
+    if(this.itemNote.trim() === ''){
+      return;
+    }
+
+    if(this.itemDate === undefined){
+      return;
+    }
+
+    if(this.itemTime === undefined){
+      return;
+    }
+    
     const session_data = await this.storageService.getData();
     this.newReminderObj = {itemTitle:      this.itemTitle, 
       itemNote:    this.itemNote, 
