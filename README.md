@@ -1,1 +1,1 @@
-# Ionic_with_Django
+# Django + Angular + Ionic
