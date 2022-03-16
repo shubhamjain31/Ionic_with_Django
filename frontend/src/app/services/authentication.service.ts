@@ -235,6 +235,15 @@ export class AuthenticationService {
     return this.http.post(this.APIUrl + '/delete-reminder/', data, httpOptions);
   }
 
+  public bookmark_reminder(data: any, sessionid: string){
+ 
+    let httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Authorization' : sessionid }),
+      withCredentials: true
+    };
+    return this.http.post(this.APIUrl + '/bookmark/reminder/', data, httpOptions);
+  }
+
   public isAuthenticated() {
     return this.authState.value;
   }

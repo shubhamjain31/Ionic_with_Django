@@ -302,6 +302,31 @@ def delete_reminder(request):
         return JsonResponse({"success":True, "msg":msg})
     return JsonResponse({})
 
+@csrf_exempt
+def bookmark_reminder(request):
+    if request.method == "POST":
+        data            = urlencode(json.loads(request.body))
+        request.POST    = QueryDict(data)
+
+        id_           = request.POST.get('id_')
+        status        = request.POST.get('status')
+
+        try:
+            reminder_obj = Reminder.objects.get(pk=id_)
+        except:
+            return JsonResponse({"error":True, "msg":'Invalid Data Found'})
+
+        reminder_obj.bookmark = str_to_bool(status)
+        reminder_obj.save()
+
+
+        if reminder_obj.bookmark == True:
+            msg = "Reminder Bookmarked!"
+        else:
+            msg = "Remove Bookmarked!"
+        return JsonResponse({"success":True, "msg":msg})
+    return JsonResponse({})
+
 def str_to_bool(status):
     if status == 'True':
         return True

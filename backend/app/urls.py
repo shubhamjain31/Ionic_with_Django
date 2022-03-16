@@ -17,4 +17,5 @@ urlpatterns = [
     path('update-reminder/' , update_reminder , name="update_reminder"),
     path('delete-reminder/' , delete_reminder , name="delete_reminder"),
     path('reminder-list/' , all_reminder , name="all_reminder"),
+    path('bookmark/reminder/' , bookmark_reminder , name="bookmark_reminder"),
 ]

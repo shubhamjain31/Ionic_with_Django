@@ -56,6 +56,7 @@ class Reminder(models.Model):
     user                    = models.ForeignKey(User, on_delete=models.CASCADE)
     title                   = models.CharField(max_length=200, blank=True, null=True)
     note                    = models.TextField()
+    bookmark                = models.BooleanField(default=False)
     rem_date                = models.DateField(blank=True, null=True)
     rem_time                = models.TimeField(blank=True, null=True)
     date_created            = models.DateTimeField(auto_now_add=True, editable=False, blank=True)
